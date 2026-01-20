@@ -14,4 +14,4 @@ This project also addresses specific power-user needs, such as PostgreSQL pre-bu
 
 This project is licensed under the MIT License. While some included software—such as Grafana Loki, Mimir, and MinIO—may carry dual licenses, the core components of this project (including the Dockerfile, entrypoint.sh, and the 'extra sauce' scripts) are completely open source.
 
-I have designed these images for general-purpose use, ensuring that both individuals and business entities can deploy them immediately without modification. However, the open-source nature of the scripts allows you to customize them for specific use cases if needed. I welcome feedback and am happy to review feature requests or bug reports—please feel free to open a GitHub Issue to get started."
+I have designed these images for general-purpose use, ensuring that both individuals and business entities can deploy them immediately without modification. However, the open-source nature of the scripts allows you to customize them for specific use cases if needed. I welcome feedback and am happy to review feature requests or bug reports—please feel free to open a GitHub Issue to get started.
