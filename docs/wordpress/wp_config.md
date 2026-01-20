@@ -6,7 +6,7 @@ sidebar_position: 4
 
 You can customize your WordPress configuration by setting environment variables in your Docker Compose file. Below is an example configuration that demonstrates how to set a custom table prefix and configure Redis caching for WordPress.
 
-Simply use `WORDPRESS_` prefix followed by the constant name in uppercase to set the desired configuration. You don't need to modify the `wp-config.php` file directly; the container will automatically apply these settings based on the environment variables you provide.
+Simply use `WORDPRESS_` prefix followed by the constant name in uppercase to set the desired configuration. You don't need to modify the `wp-config.php` file directly; the container will automatically apply these settings based on the environment variables you provide. You can also add multi-line configuration using the `|` symbol.
 
 ```yaml
 wordpress:
