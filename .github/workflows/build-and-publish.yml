@@ -29,6 +29,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/containers-docs:${{ github.ref_name }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/containers-docs:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/containers-docs:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
