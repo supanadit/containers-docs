@@ -36,6 +36,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   update:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Update in remote server
