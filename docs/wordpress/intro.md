@@ -1,6 +1,7 @@
 ---
 id: wordpress-into-doc
 slug: /wordpress
+title: Wordpress
 ---
 
 :::warning Beta

@@ -1,6 +1,7 @@
 ---
 id: postgresql-into-doc
 slug: /postgresql
+title: PostgreSQL
 ---
 
 :::warning Beta
