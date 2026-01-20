@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Serverless
 
-This Wordpress container image supports serverless mode, allowing you to run Wordpress without relying on local storage. In serverless mode, all content such as uploads, themes, and plugins are stored in a remote storage solution like GCS Fuse for example. To enable serverless mode, you can set the `IS_STATELESS` environment variable to `true` in your Docker Compose configuration as shown below:
+This Wordpress container image supports serverless mode, allowing you to run Wordpress without relying on local storage. In serverless mode, content uploads are stored in a remote storage solution like GCS Fuse for example. But for Themes and Plugins, they must be included at build time. To enable serverless mode, you can set the `IS_STATELESS` environment variable to `true` in your Docker Compose configuration as shown below:
 
 :::warning
 The `theme` and `plugin` must be include in build time. You can create a custom Docker image that extends the base Wordpress image and includes your desired themes and plugins. So the `/content` folder only contains the `uploads` folder.
