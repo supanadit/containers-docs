@@ -30,7 +30,7 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/containers-docs:${{ github.ref_name }}
-            ghcr.io/${{ github.repository_owner }}/containers-docs:latest
+            ghcr.io/${{ github.repository_owner }}/containers-docs/documentation:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/containers-docs/documentation:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
