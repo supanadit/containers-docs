@@ -9,7 +9,7 @@ To set up a high-availability PostgreSQL cluster using Patroni, you can use the 
 ```yaml
 services:
   etcd:
-    image: supanadit/etcd:3.5
+    image: ghcr.io/supanadit/containers/etcd:3.6.7-r4
     container_name: etcd
     environment:
       ETCD_NAME: etcd0
