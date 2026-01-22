@@ -1,0 +1,8 @@
+{
+  "label": "ETCD",
+  "position": 3,
+  "link": {
+    "type": "doc",
+    "id": "etcd-intro-doc"
+  }
+}

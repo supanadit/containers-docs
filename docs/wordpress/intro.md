@@ -1,5 +1,5 @@
 ---
-id: wordpress-into-doc
+id: wordpress-intro-doc
 slug: /wordpress
 title: Wordpress
 ---
