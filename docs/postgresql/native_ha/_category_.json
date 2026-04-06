@@ -1,0 +1,8 @@
+{
+  "label": "Native HA",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Native PostgreSQL high availability with streaming replication"
+  }
+}

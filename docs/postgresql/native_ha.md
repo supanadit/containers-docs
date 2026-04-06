@@ -1,8 +1,45 @@
 ---
-sidebar_position: 4
+id: native_ha
+slug: /postgresql/native-ha
+title: Native HA (Deprecated)
 ---
 
-# Native HA
+# Native HA Documentation Moved
+
+The Native HA documentation has been reorganized. Please use the new structure:
+
+## New Documentation Location
+
+### [Native HA Introduction](./native_ha/intro)
+
+Overview of native streaming replication, comparison with Patroni.
+
+### [Synchronization Modes](./native_ha/sync_modes)
+
+Single sync, quorum sync, and async replication modes.
+
+### [Replica Names](./native_ha/replica_names)
+
+Application names and naming conventions.
+
+### [Dynamic Configuration](./native_ha/dynamic_config)
+
+Runtime configuration changes with `pg-reload-sync-config.sh`.
+
+### [Troubleshooting](./native_ha/troubleshooting)
+
+Common issues and solutions.
+
+---
+
+## Quick Comparison
+
+| Feature | Native HA | Patroni |
+|---------|-----------|---------|
+| External dependencies | None | etcd/Consul/ZooKeeper |
+| Automatic failover | No | Yes |
+| Quorum sync support | Yes | Via DCS |
+| Dynamic configuration | Yes | Via DCS |
 
 To set up a native high-availability PostgreSQL cluster using streaming replication, you can use the following Docker Compose configuration. This setup includes one primary PostgreSQL instance and two replica instances that replicate data from the primary.
 

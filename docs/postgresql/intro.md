@@ -25,6 +25,40 @@ services:
 ```
 
 
+## High Availability Options
+
+This PostgreSQL container supports multiple high availability configurations:
+
+### Native HA
+
+Lightweight streaming replication without external dependencies:
+
+- **Single Sync Mode** - One synchronous replica with automatic failover backup
+- **Quorum Sync Mode** - Multiple replicas must acknowledge commits
+- **Async Mode** - Best performance, no commit waiting
+- **Dynamic Configuration** - Change sync settings at runtime without restart
+
+See [Native HA Documentation](./native_ha/intro) for details.
+
+### Patroni
+
+Distributed high availability with automatic failover:
+
+- Requires etcd, Consul, or ZooKeeper
+- Automatic leader election
+- Distributed consensus
+
+See [Patroni Documentation](./patroni) for details.
+
+### Patroni + Citus
+
+Distributed PostgreSQL with Citus for horizontal scaling:
+
+- Citus distributes tables across multiple nodes
+- Patroni manages HA for each node
+
+See [Patroni Citus Documentation](./patroni_citus) for details.
+
 ## Important Notes
 
 We only support PostgreSQL versions that are actively maintained by the official PostgreSQL team. Please refer to the [major version support policy](https://www.postgresql.org/support/versioning/) for details. It is recommended to use a specific major version tag to avoid unexpected issues during minor version upgrades.
