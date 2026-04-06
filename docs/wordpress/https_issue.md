@@ -6,7 +6,7 @@ To resolve this issue, you can set the `IS_HTTPS` environment variable to `true`
 
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"

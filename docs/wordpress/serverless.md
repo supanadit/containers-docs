@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 9
 ---
 
 # Serverless
@@ -12,7 +12,7 @@ The `theme` and `plugin` must be include in build time. You can create a custom 
 
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"

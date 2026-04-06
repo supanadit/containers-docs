@@ -1,3 +1,7 @@
+---
+sidebar_position: 11
+---
+
 # Apache MPM
 
 You can configure the Apache Multi-Processing Module (MPM) used by the WordPress container by setting the `APACHE_MPM` environment variable in your Docker Compose configuration. The available options are `prefork`, `worker`, and `event`.
@@ -8,9 +12,13 @@ If you don't know what the different MPMs are, here is a brief overview:
 - **Worker**: This MPM uses multiple threads per process to handle incoming connections. It is more memory efficient than Prefork and can handle more simultaneous connections. However, it requires that all libraries used by the application are thread-safe.
 - **Event**: This MPM is similar to Worker but is optimized for handling keep-alive connections more efficiently. It uses a separate thread to manage keep-alive connections, allowing worker threads to focus on active requests. This can lead to better performance under high load with many keep-alive connections.
 
+:::info
+For memory-constrained deployments (under 256MB RAM), see [Low Memory Configuration](./low_memory.md) for automatic tuning with `APACHE_LOW_MEMORY_MODE`.
+:::
+
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"
@@ -30,7 +38,7 @@ wordpress:
 
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"
@@ -57,7 +65,7 @@ wordpress:
 
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"
@@ -85,7 +93,7 @@ wordpress:
 
 ```yaml
 wordpress:
-  image: ghcr.io/supanadit/containers/wordpress-apache:6.8.3-r0.0.4
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   restart: always
   ports:
     - "80:80"
