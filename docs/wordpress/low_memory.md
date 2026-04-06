@@ -6,6 +6,10 @@ sidebar_position: 6
 
 The WordPress container supports running in memory-constrained environments such as small VPS instances or containers with limited RAM. This guide covers the settings needed to optimize for low-memory deployments.
 
+:::warning Minimum Memory Requirements
+WordPress requires a minimum of **64MB PHP memory** to function properly. Settings below 64M (such as 32M) will cause **HTTP 500 errors** with the message "This page isn’t working" - this is a PHP out-of-memory condition, not a container failure. When this happens, increase `PHP_MEMORY_LIMIT` to at least 64M.
+:::
+
 :::info
 For Apache MPM-specific tuning, see [Apache MPM Configuration](./apache_mpm.md).
 :::
@@ -97,7 +101,11 @@ wordpress:
     - ./.data/wordpress:/content
 ```
 
-### 128MB RAM Target
+### 128MB RAM Target (OPcache Disabled)
+
+:::warning Performance Impact
+At 128MB container memory with OPcache disabled, WordPress will be extremely slow because every PHP request requires full script recompilation. This configuration should only be used for testing or development, not production sites with traffic.
+:::
 
 ```yaml
 wordpress:
@@ -116,12 +124,61 @@ wordpress:
     # Enable low memory mode
     APACHE_LOW_MEMORY_MODE: "true"
 
-    # Disable OPcache for minimal memory
+    # Disable OPcache for minimal memory usage
     PHP_OPCACHE_ENABLE: "false"
-    PHP_MEMORY_LIMIT: 32M
+
+    # 64M is the minimum viable PHP memory for WordPress
+    PHP_MEMORY_LIMIT: 64M
   volumes:
     - ./.data/wordpress:/content
 ```
+
+### 64MB RAM Target (Absolute Minimum, Not Recommended)
+
+This is the absolute minimum configuration. WordPress will barely function:
+
+- No OPcache (disabled)
+- No plugins or themes beyond defaults
+- Very slow performance
+- Frequent out-of-memory errors under any load
+
+```yaml
+wordpress:
+  image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
+  restart: always
+  environment:
+    WORDPRESS_DB_HOST: mariadb:3306
+    WORDPRESS_DB_USER: root
+    WORDPRESS_DB_PASSWORD: secret
+    WORDPRESS_DB_NAME: wordpress
+    WORDPRESS_FS_METHOD: "direct"
+
+    APACHE_MPM: event
+    APACHE_LOW_MEMORY_MODE: "true"
+    PHP_OPCACHE_ENABLE: "false"
+    PHP_MEMORY_LIMIT: 64M
+  volumes:
+    - ./.data/wordpress:/content
+```
+
+## Troubleshooting
+
+### HTTP 500 Error with Low Memory Settings
+
+If you see "This page isn’t working" (HTTP 500) error:
+
+1. **This is NOT a container failure** - it's PHP running out of memory
+2. Increase `PHP_MEMORY_LIMIT` from 32M/64M to at least 128M
+3. Check container logs: `docker logs <container_name>`
+4. If running in a memory-constrained environment, increase container memory limit
+
+### Symptoms of PHP Memory Exhaustion
+
+| Symptom | Cause | Solution |
+|---------|-------|----------|
+| HTTP 500 "This page isn't working" | PHP memory limit too low | Increase `PHP_MEMORY_LIMIT` to 64M+ |
+| "Allowed memory size of X bytes exhausted" in logs | WordPress needs more PHP memory | Increase `PHP_MEMORY_LIMIT` |
+| Site loads but admin is broken | Admin requires more memory | Increase `PHP_MEMORY_LIMIT` to 128M+ |
 
 ## Overriding Individual Settings
 

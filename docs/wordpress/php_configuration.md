@@ -6,6 +6,10 @@ sidebar_position: 5
 
 You can customize PHP settings using environment variables in your Docker Compose configuration. This includes memory limits, upload constraints, execution timeouts, and OPcache tuning.
 
+:::warning Minimum Memory Requirement
+WordPress requires a minimum of **64MB PHP memory** to function. Settings below 64M (such as 32M) will cause **HTTP 500 errors**. If you experience "This page isn’t working" errors, increase `PHP_MEMORY_LIMIT` to at least 64M.
+:::
+
 ## PHP Memory & Upload Limits
 
 | Environment Variable | Description | Default |
@@ -59,17 +63,17 @@ wordpress:
     PHP_OPCACHE_MAX_ACCELERATED_FILES: 200
 ```
 
-**For 128MB RAM target (disable OPcache):**
+**For 128MB RAM target (OPcache disabled, minimum viable):**
 ```yaml
 wordpress:
   image: ghcr.io/supanadit/containers/wordpress-apache:6.9-r3
   environment:
     PHP_OPCACHE_ENABLE: "false"
-    PHP_MEMORY_LIMIT: 64M
+    PHP_MEMORY_LIMIT: 64M  # Minimum for WordPress to function
 ```
 
 :::warning
-Disabling OPcache will impact performance as PHP scripts will be re-compiled on every request. Only use this for extremely memory-constrained environments.
+Disabling OPcache will impact performance as PHP scripts will be re-compiled on every request. Only use this for extremely memory-constrained environments. Settings below 64M will cause HTTP 500 errors.
 :::
 
 ## Complete Example
