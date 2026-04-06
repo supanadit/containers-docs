@@ -41,6 +41,8 @@ jobs:
     steps:
       - name: Update in remote server
         uses: appleboy/ssh-action@v1
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -48,6 +50,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             echo "Updating image..."
-            cd /home/${{ secrets.SSH_USER }}/docker/container-docs
+            cd $DEPLOY_PATH
             docker compose pull
             docker compose up -d

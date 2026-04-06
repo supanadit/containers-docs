@@ -1,6 +1,5 @@
 ---
 id: postgresql-intro-doc
-slug: /postgresql
 title: PostgreSQL
 ---
 

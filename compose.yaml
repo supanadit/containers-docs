@@ -1,6 +1,6 @@
 services:
-  docusaurus:
+  docs:
     build: .
     container_name: containers-docs
     ports:
-      - "3000:3000"
+      - "3050:80"
