@@ -124,7 +124,7 @@ See [PgPool-II documentation](https://www.pgpool.net/docs/latest/en/html/config-
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PGPOOL_MASTER_SLAVE_MODE` | `off` | Enable master/slave mode |
+| `PGPOOL_MASTER_SLAVE_MODE` | `on` | Enable master/slave mode |
 | `PGPOOL_MASTER_SLAVE_SUB_MODE` | `stream` | Sub mode: `stream` or `slony` |
 
 ```yaml
@@ -133,11 +133,34 @@ environment:
   PGPOOL_MASTER_SLAVE_SUB_MODE: "stream"
 ```
 
-## Query Router Mode
+## Query Routing & Validation
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PGPOOL_QUERYRouter_MODE` | `off` | Enable query router mode (for sharding) |
+| `PGPOOL_ENABLE_HINT_QUERY` | `off` | Enable hint-based query routing |
+| `PGPOOL_VALIDATE_QUERY` | `off` | Validate SQL before sending to backends |
+| `PGPOOL_REPLICATION_CHECK` | `off` | Enable replication check |
+| `PGPOOL_AUTO_DB_REMOVE` | `off` | Auto remove temporary DB connections |
+| `PGPOOL_AUTOICACHE_REMOVE` | `off` | Auto remove idle cache connections |
+
+### Using Hints
+
+Enable load balancing with per-query hints:
+
+```yaml
+environment:
+  PGPOOL_ENABLE_HINT_QUERY: "on"
+```
+
+Then use SQL comments to direct queries:
+
+```sql
+-- Direct to primary
+/*INSERT*/ INSERT INTO users VALUES (1, 'test');
+
+-- Direct to replica
+/*READONLY*/ SELECT * FROM users;
+```
 
 ## Authentication
 
@@ -151,6 +174,7 @@ environment:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PGPOOL_LOG_MIN_MESSAGES` | `warning` | Minimum log level |
+| `PGPOOL_LOG_HOSTNAME` | `on` | Log hostname in connections |
 | `PGPOOL_DEBUG` | `false` | Enable debug logging |
 
 ### Log Levels
@@ -173,7 +197,24 @@ environment:
 | `PGPOOL_ENABLE_WATCHDOG` | `off` | Enable watchdog for HA |
 | `PGPOOL_WD_HOSTNAME` | (none) | Partner PgPool-II hostname |
 | `PGPOOL_WD_PORT` | `9000` | Watchdog port |
+| `PGPOOL_WD_AUTHENTICATION` | (none) | Watchdog authentication method |
 | `PGPOOL_DELegate_IP` | (none) | Virtual IP for failover |
+| `PGPOOL_WD_LIFECHECK_METHOD` | `heartbeat` | Lifecheck method: `heartbeat` or `query` |
+| `PGPOOL_WD_INTERVAL` | `10` | Lifecheck interval in seconds |
+| `PGPOOL_WD_PRIORITY` | `1` | Watchdog priority (higher = preferred) |
+| `PGPOOL_WD_FAILOVER_TIMEOUT` | `15` | Failover timeout in seconds |
+
+### Watchdog Example
+
+```yaml
+environment:
+  PGPOOL_ENABLE_WATCHDOG: "on"
+  PGPOOL_WD_HOSTNAME: "pgpool-2.erp-db-postgresql.svc.cluster.local"
+  PGPOOL_WD_PORT: "9000"
+  PGPOOL_DELegate_IP: "10.0.0.100"
+  PGPOOL_WD_LIFECHECK_METHOD: "heartbeat"
+  PGPOOL_WD_INTERVAL: "10"
+```
 
 ## Patroni Integration
 
@@ -192,31 +233,6 @@ environment:
 
 See [Patroni Integration](./patroni) for detailed setup.
 
-## Hint-based Query Routing
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PGPOOL_ENABLE_HINT_QUERY` | `off` | Enable hint-based query routing |
-
-### Using Hints
-
-Enable load balancing with per-query hints:
-
-```yaml
-environment:
-  PGPOOL_ENABLE_HINT_QUERY: "on"
-```
-
-Then use SQL comments to direct queries:
-
-```sql
--- Direct to primary
-/*INSERT*/ INSERT INTO users VALUES (1, 'test');
-
--- Direct to replica
-/*READONLY*/ SELECT * FROM users;
-```
-
 ## SSL/TLS Configuration
 
 | Variable | Default | Description |
@@ -224,27 +240,36 @@ Then use SQL comments to direct queries:
 | `PGPOOL_SSL` | `off` | Enable SSL |
 | `PGPOOL_SSL_KEY` | (none) | Path to SSL key |
 | `PGPOOL_SSL_CERT` | (none) | Path to SSL certificate |
+| `PGPOOL_SSL_SECURITY_MODE` | `postgresql` | Security mode: `postgresql` or `transfer` |
+
+### SSL Example
+
+```yaml
+environment:
+  PGPOOL_SSL: "on"
+  PGPOOL_SSL_KEY: "/etc/ssl/private/server.key"
+  PGPOOL_SSL_CERT: "/etc/ssl/certs/server.crt"
+```
 
 ## Memory Cache
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PGPOOL_MEMORY_CACHE_MODE` | `off` | Enable memory cache mode |
-| `PGPOOL_MEMQCACHE_CACHE_BLOCKS` | `4096` | Number of cache blocks |
+| `PGPOOL_MEMQCACHE_CACHE_BLOCKS` | `8192` | Number of cache blocks |
 | `PGPOOL_MEMQCACHE_BLOCK_SIZE` | `1048576` | Block size in bytes |
-| `PGPOOL_MEMQCACHE_MAXCACHE` | `20` | Maximum cached queries |
+| `PGPOOL_MEMQCACHE_MAXCACHE` | `50` | Maximum cached queries |
+| `PGPOOL_MEMQCACHE_EXPIRE_TIME` | `10000` | Cache expiration time in seconds |
+| `PGPOOL_MEMQCACHE_TOTAL_SIZE` | `1024` | Total cache size in MB |
 
-## Replication Check
+### Memory Cache Example
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PGPOOL_REPLICATION_CHECK` | `off` | Enable replication check |
-
-## Inline Query Validation
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PGPOOL_VALIDATE_QUERY` | `off` | Validate SQL before sending to backends |
+```yaml
+environment:
+  PGPOOL_MEMORY_CACHE_MODE: "on"
+  PGPOOL_MEMQCACHE_TOTAL_SIZE: "1024"
+  PGPOOL_MEMQCACHE_CACHE_BLOCKS: "8192"
+```
 
 ## Advanced Settings
 
@@ -289,6 +314,19 @@ services:
       PGPOOL_SR_CHECK_PERIOD: "10"
       PGPOOL_DELAY_THRESHOLD: "1048576"
       PGPOOL_PREFER_LOWER_DELAY_STANDBY: "off"
+      
+      # Query routing (optional)
+      PGPOOL_ENABLE_HINT_QUERY: "off"
+      PGPOOL_VALIDATE_QUERY: "off"
+      
+      # Memory cache (optional)
+      PGPOOL_MEMORY_CACHE_MODE: "off"
+      PGPOOL_MEMQCACHE_TOTAL_SIZE: "1024"
+      
+      # SSL/TLS (optional)
+      # PGPOOL_SSL: "on"
+      # PGPOOL_SSL_KEY: "/etc/ssl/private/server.key"
+      # PGPOOL_SSL_CERT: "/etc/ssl/certs/server.crt"
       
       # Authentication
       PGPOOL_ENABLE_POOL_HBA: "off"
