@@ -48,6 +48,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          envs: DEPLOY_PATH
           script: |
             echo "Updating image..."
             cd $DEPLOY_PATH
