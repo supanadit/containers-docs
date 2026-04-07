@@ -118,3 +118,62 @@ services:
       - /home/<user>/.ssh/id_ed25519:/home/postgres/.ssh/id_ed25519:ro
       - /home/<user>/.ssh/id_ed25519.pub:/home/postgres/.ssh/id_ed25519.pub:ro
 ```
+
+## Boolean Value Formats
+
+All pgBackRest-related environment variables that accept boolean values accept the following formats (case-insensitive):
+
+| Value | Description |
+|-------|-------------|
+| `true`, `1`, `yes`, `on`, `y` | Truthy values |
+| `false`, `0`, `no`, `off`, `n` | Falsy values |
+
+For example, all of the following are equivalent:
+
+```yaml
+environment:
+  PGBACKREST_ENABLE: "true"    # ✓
+  PGBACKREST_ENABLE: "1"       # ✓ also truthy
+  PGBACKREST_ENABLE: "yes"     # ✓ also truthy
+  PGBACKREST_ENABLE: "on"      # ✓ also truthy
+  PGBACKREST_ENABLE: "y"       # ✓ also truthy
+```
+
+## PGBACKREST_ENABLE Precedence
+
+`PGBACKREST_ENABLE` acts as a master switch. When set to `false`, all related pgBackRest settings are silently ignored even if they are configured:
+
+| Setting | Behavior when PGBACKREST_ENABLE=false |
+|---------|---------------------------------------|
+| `PGBACKREST_AUTO_ENABLE` | Ignored - automatic backup scheduling is disabled |
+| `PGBACKREST_RESTORE` | Ignored - restore operations are disabled |
+| `PGBACKREST_ARCHIVE_ENABLE` | Ignored - WAL archiving is disabled |
+
+This design prevents accidental backup/restore operations when you have disabled pgBackRest but forgot to unset related variables.
+
+### Warning Messages
+
+When contradictions are detected, the container logs warnings (not errors) to help you identify misconfigurations:
+
+```
+WARNING: PGBACKREST_ENABLE is false but PGBACKREST_AUTO_ENABLE is true - ignoring auto backup settings
+WARNING: PGBACKREST_ENABLE is false but PGBACKREST_RESTORE is true - ignoring restore settings
+```
+
+## Restore Command Options
+
+When performing restores, the following pgBackRest command-line options are available regardless of `PGBACKREST_ENABLE` setting:
+
+| Option | Description |
+|--------|-------------|
+| `delta` | Restore using checksum differences instead of timestamp |
+| `force` | Force restore operation, bypassing safety checks |
+
+These are pgBackRest CLI options and work independently of the container's ENABLE setting. For example:
+
+```yaml
+environment:
+  POSTGRES_PASSWORD: secret
+  PGBACKREST_ENABLE: "false"  # Backup disabled
+  PGBACKREST_RESTORE_DELTA: "true"  # But delta restore still works when needed
+```
