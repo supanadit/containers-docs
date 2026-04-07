@@ -337,6 +337,6 @@ services:
 
 ## Related
 
-- [Intro](./intro) - Basic setup
+- [Intro](./) - Basic setup
 - [Patroni](./patroni) - Patroni integration
 - [Troubleshooting](./troubleshooting) - Common issues
