@@ -257,3 +257,56 @@ environment:
   PGBACKREST_ENABLE: "false"  # Backup disabled
   PGBACKREST_RESTORE_DELTA: "true"  # But delta restore still works when needed
 ```
+
+## Patroni Integration
+
+When using Patroni for HA management, pgBackRest automatically integrates via Patroni callbacks. This ensures pgBackRest configuration is updated when nodes change roles during failover or switchover.
+
+### How It Works
+
+| Event | Action |
+|-------|--------|
+| Replica promoted to primary | Remove pg2-host settings, set `backup-standby=n` |
+| Primary demoted to replica | Add pg2-host settings (if `PGBACKREST_PRIMARY_PATH` set) |
+| Backup completes | Log status to container logs |
+| Restore completes | Regenerate pgBackRest config for current role |
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PATRONI_PGBACKREST_CALLBACKS` | `true` | Enable/disable Patroni callbacks |
+
+### Example Compose Configuration
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      HA_MODE: patroni
+      PATRONI_NAME: postgres-${HOSTNAME}
+      PATRONI_SCOPE: postgres-cluster
+      ETCD_HOSTS: etcd:2379
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_STANZA: default
+      PGBACKREST_REPO_TYPE: s3
+      PGBACKREST_REPO_S3_BUCKET: pgbackrest
+      PGBACKREST_REPO_S3_ENDPOINT: minio:9000
+      PGBACKREST_REPO_S3_KEY: superadmin
+      PGBACKREST_REPO_S3_KEY_SECRET: supersecretpassword
+      PGBACKREST_AUTO_ENABLE: "true"
+      PGBACKREST_AUTO_FULL_CRON: "00 02 * * *"
+      PATRONI_PGBACKREST_CALLBACKS: "true"  # Default, but explicit
+    volumes:
+      - postgresql_data:/usr/local/pgsql/data
+      - pgbackrest_backup:/usr/local/pgsql/backup
+```
+
+### Limitations
+
+- Callbacks require Patroni HA mode (`HA_MODE: patroni`)
+- Standby backup (`pg2-host`) requires SSH access to primary
+- Not compatible with Kubernetes (no SSH between pods)
+- For Kubernetes, use `PGBACKREST_BACKUP_STANDBY: "n"` with S3 backup
