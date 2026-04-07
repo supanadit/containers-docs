@@ -31,8 +31,6 @@ We also provide an option to enable automatic backup scheduling using cron synta
 services:
   postgresql:
     image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
-    ports:
-      - "5434:5432"
     environment:
       POSTGRES_PASSWORD: secret
       // highlight-start
@@ -47,6 +45,27 @@ services:
       - ./.data:/usr/local/pgsql/data
       - ./.backup:/usr/local/pgsql/backup
 ```
+
+### Automatic Backup on Replicas
+
+By default, automatic backups run only on the primary node. Set `PGBACKREST_AUTO_PRIMARY_ONLY: "false"` to allow replicas to run scheduled backups:
+
+```yaml
+services:
+  postgresql-replica:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_AUTO_ENABLE: "true"
+      // highlight-next-line
+      PGBACKREST_AUTO_PRIMARY_ONLY: "false"  # Allow replicas to run scheduled backups
+      PGBACKREST_AUTO_FULL_CRON: "00 02 * * *"
+```
+
+This is useful when:
+- Primary has slow disk I/O and you want to offload backup to faster replicas
+- Replicas have access to the backup repository
+- Using standby backup mode (`PGBACKREST_BACKUP_STANDBY: "prefer"`)
 
 ## Backup to S3-Compatible Storage
 
