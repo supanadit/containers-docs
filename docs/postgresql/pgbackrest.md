@@ -119,6 +119,67 @@ services:
       - /home/<user>/.ssh/id_ed25519.pub:/home/postgres/.ssh/id_ed25519.pub:ro
 ```
 
+## Standby Backup (SSH + Shared Storage)
+
+For environments with SSH access between replicas and shared storage with the primary, you can configure standby backup to reduce load on the primary. This requires:
+
+| Requirement | Description |
+|-------------|-------------|
+| SSH access | Passwordless SSH from replica to primary |
+| Shared storage | Replica must be able to access primary's data directory |
+| Primary path | `PGBACKREST_PRIMARY_PATH` must point to primary's data directory |
+
+### Backup Standby Modes
+
+| Mode | Value | Description |
+|------|-------|-------------|
+| **Required** | `y`, `yes`, `1`, `on`, `true` | Backup **must** run from standby; fails if unavailable |
+| **Preferred** | `prefer` | Backup **from standby if available**, otherwise fallback to primary |
+| **Disabled** | `n`, `no`, `0`, `off`, `false` | Backup from primary only |
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_PRIMARY_PATH: /usr/local/pgsql/data  # Required for standby backup
+      PGBACKREST_PRIMARY_HOST: primary.local
+      // highlight-next-line
+      PGBACKREST_BACKUP_STANDBY: "prefer"  # Backup from standby, fallback to primary
+    volumes:
+      - ./.data:/usr/local/pgsql/data  # Must be shared storage
+```
+
+### Kubernetes Limitations
+
+:::warning
+Standby backup (`backup-standby=y` or `prefer`) **does not work** in Kubernetes due to:
+
+- **No SSH between pods** - Pods cannot SSH to each other
+- **Local storage** - Each pod typically uses local PV/hostPath, not shared storage
+- **Pod isolation** - Each PostgreSQL runs on its own node with own disk
+
+In K8s environments, always set `PGBACKREST_BACKUP_STANDBY: "n"` or leave it unset (defaults to primary-only backup).
+:::
+
+For Kubernetes, use primary-only backup to S3:
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_BACKUP_STANDBY: "n"  # Explicitly disable for K8s
+      PGBACKREST_REPO_TYPE: s3
+      PGBACKREST_REPO_S3_BUCKET: my-backups
+      PGBACKREST_REPO_S3_ENDPOINT: s3.amazonaws.com
+      # ... S3 credentials
+```
+
 ## Boolean Value Formats
 
 All pgBackRest-related environment variables that accept boolean values accept the following formats (case-insensitive):
