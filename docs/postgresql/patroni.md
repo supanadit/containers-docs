@@ -4,6 +4,10 @@ sidebar_position: 2
 
 # Patroni
 
+:::caution Development Only
+This setup is for **development/testing purposes only**. For production use, see [ETCD High Availability](/etcd/ha/patroni) for TLS-secured cluster configuration.
+:::
+
 To set up a high-availability PostgreSQL cluster using Patroni, you can use the following Docker Compose configuration. This setup includes three PostgreSQL instances managed by Patroni and an etcd instance for distributed configuration storage.
 
 ```yaml

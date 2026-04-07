@@ -96,6 +96,54 @@ SELECT * FROM pg_stat_replication;
 
 ## Configuration Issues
 
+### "canceling statement due to conflict with recovery"
+
+**Symptom:** Errors appearing on replica queries:
+
+```
+ERROR: canceling statement due to conflict with recovery
+DETAIL: User query was conflicting with recovery of X
+```
+
+**Root Cause:** WAL replay from primary conflicts with active queries on replica — typically during VACUUM or schema changes on primary while replica is running long queries.
+
+**Our Default Fix (Already Applied):** This container auto-configures replica-side settings so you don't have to tune manually:
+
+| Setting | PostgreSQL Default | Our Default | Purpose |
+|---------|-------------------|-------------|---------|
+| `hot_standby_feedback` | `off` | `on` | Replica tells primary which rows it's actively using |
+| `max_standby_streaming_delay` | `30s` | `-1` (infinite) | Never cancel conflicting queries |
+| `max_standby_archive_delay` | `30s` | `-1` (infinite) | Never cancel for archived WAL |
+
+**Why `-1` (infinite)?** PostgreSQL's default 30s is often too short for read-heavy workloads with long analytical queries. Setting `-1` means the replica will wait indefinitely rather than interrupt user queries. WAL disk usage should be monitored on primary as a safeguard.
+
+**Override via environment variables:**
+
+```yaml
+POSTGRESQL_CONFIG_HOT_STANDBY_FEEDBACK: "on"
+POSTGRESQL_CONFIG_MAX_STANDBY_STREAMING_DELAY: "-1"
+POSTGRESQL_CONFIG_MAX_STANDBY_ARCHIVE_DELAY: "-1"
+```
+
+**Live fix without restart** — connect **directly to replica** (port 5432, not through PgBouncer):
+
+```sql
+ALTER SYSTEM SET hot_standby_feedback = on;
+ALTER SYSTEM SET max_standby_streaming_delay = -1;
+ALTER SYSTEM SET max_standby_archive_delay = -1;
+SELECT pg_reload_conf();
+```
+
+**Verification:**
+
+```sql
+SHOW hot_standby_feedback;
+SHOW max_standby_streaming_delay;
+SHOW max_standby_archive_delay;
+```
+
+**Note:** These are **replica-only** settings. They have no effect on the primary.
+
 ### Invalid `synchronous_standby_names` Syntax
 
 **Error in PostgreSQL logs:**
