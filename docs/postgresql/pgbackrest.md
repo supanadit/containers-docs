@@ -67,6 +67,59 @@ This is useful when:
 - Replicas have access to the backup repository
 - Using standby backup mode (`PGBACKREST_BACKUP_STANDBY: "prefer"`)
 
+## Backup Performance & Verification Options
+
+You can fine-tune backup behavior with the following environment variables:
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_AUTO_ENABLE: "true"
+      // highlight-start
+      PGBACKREST_BACKUP_START_FAST: "true"      # Faster full backups with checkpoint
+      PGBACKREST_BACKUP_STOP_AUTO: "true"      # Clean shutdown after backup
+      PGBACKREST_BACKUP_VERIFY: "true"         # Verify backup after creation (default: true)
+      PGBACKREST_PROCESS_MAX: "4"              # Parallel backup/restore threads
+      // highlight-end
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_BACKUP_START_FAST` | `false` | Force a checkpoint before backup for faster completion |
+| `PGBACKREST_BACKUP_STOP_AUTO` | `false` | Stop PostgreSQL automatically after backup |
+| `PGBACKREST_BACKUP_VERIFY` | `true` | Verify backup after creation to ensure integrity |
+| `PGBACKREST_PROCESS_MAX` | - | Number of parallel processes for backup/restore (auto-detected if not set) |
+
+## Backup Storage Configuration
+
+Configure how backups are stored and retained:
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      // highlight-start
+      PGBACKREST_REPO_RETENTION_FULL_TYPE: "full"  # WAL retention type
+      PGBACKREST_ARCHIVE_ASYNC: "true"             # Async WAL archiving for performance
+      PGBACKREST_SPARSE_TABLE: "true"              # Faster backup on supported filesystems
+      PGBACKREST_REPO_COMPRESSION: "zstd"          # Backup compression (gzip/lz4/zstd)
+      // highlight-end
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_REPO_RETENTION_FULL_TYPE` | - | WAL retention type: `full` (full backups only) or `backup` (include differential WAL) |
+| `PGBACKREST_ARCHIVE_ASYNC` | `false` | Enable async WAL archiving for better performance |
+| `PGBACKREST_SPARSE_TABLE` | `false` | Enable sparse table support for faster backups on supported filesystems |
+| `PGBACKREST_REPO_COMPRESSION` | `gzip` | Backup compression type: `gzip`, `lz4`, or `zstd` |
+
 ## Backup to S3-Compatible Storage
 
 The image also supports backing up to S3-compatible storage solutions. You can configure the S3 repository settings using environment variables. Here's an example configuration for backing up to an S3-compatible service:
@@ -100,6 +153,32 @@ services:
       - ./.data:/usr/local/pgsql/data
       - ./.backup:/usr/local/pgsql/backup
 ```
+
+### S3 Extended Options
+
+Additional S3 configuration options:
+
+```yaml
+services:
+  postgresql:
+    environment:
+      # ... base S3 config ...
+      // highlight-start
+      PGBACKREST_REPO_S3_BUCKET_REGION: "ap-indonesia-1"  # Explicit bucket region
+      PGBACKREST_REPO_S3_ENDPOINT_FLEXIBLE: "true"        # Allow flexible endpoint matching
+      PGBACKREST_REPO_S3_VERIFY_TLS: "true"               # Verify TLS certificates
+      PGBACKREST_REPO_S3_CA_FILE: "/path/to/ca-bundle.crt"  # Custom CA bundle file
+      PGBACKREST_REPO_S3_CA_PATH: "/path/to/ca-bundle/"   # Custom CA bundle path
+      // highlight-end
+```
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_S3_BUCKET_REGION` | Explicit S3 bucket region (useful for cross-region access) |
+| `PGBACKREST_REPO_S3_ENDPOINT_FLEXIBLE` | Enable flexible endpoint matching for S3-compatible providers |
+| `PGBACKREST_REPO_S3_VERIFY_TLS` | Verify TLS certificates (default: true) |
+| `PGBACKREST_REPO_S3_CA_FILE` | Path to CA bundle file for TLS verification |
+| `PGBACKREST_REPO_S3_CA_PATH` | Path to CA bundle directory for TLS verification |
 
 ## Backup to SFTP Server
 
@@ -137,6 +216,47 @@ services:
       - /home/<user>/.ssh/id_ed25519:/home/postgres/.ssh/id_ed25519:ro
       - /home/<user>/.ssh/id_ed25519.pub:/home/postgres/.ssh/id_ed25519.pub:ro
 ```
+
+## Backup to GCS (Google Cloud Storage)
+
+The image also supports backing up to Google Cloud Storage:
+
+```yaml
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_PASSWORD: secret
+      // highlight-start
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_REPO_TYPE: gcs
+      PGBACKREST_REPO_GCS_BUCKET: my-pgbackrest-bucket
+      PGBACKREST_REPO_GCS_ENDPOINT: storage.googleapis.com
+      PGBACKREST_REPO_GCS_KEY: <service-account-key>
+      // highlight-end
+      # Optional GCS settings
+      # PGBACKREST_REPO_GCS_ENDPOINT_FLEXIBLE: "true"
+      # PGBACKREST_REPO_GCS_CA_BUNDLE_FILE: "/path/to/ca-bundle.crt"
+      # PGBACKREST_REPO_GCS_CA_BUNDLE_PATH: "/path/to/ca-bundle/"
+    volumes:
+      - ./.data:/usr/local/pgsql/data
+      - ./.backup:/usr/local/pgsql/backup
+```
+
+### GCS Configuration Options
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_GCS_BUCKET` | GCS bucket name |
+| `PGBACKREST_REPO_GCS_ENDPOINT` | GCS endpoint (default: storage.googleapis.com) |
+| `PGBACKREST_REPO_GCS_KEY` | Service account JSON key |
+| `PGBACKREST_REPO_GCS_KEY_TYPE` | Key type (default: service-account) |
+| `PGBACKREST_REPO_GCS_USER_PROJECT` | GCP project ID for requester-pays buckets |
+| `PGBACKREST_REPO_GCS_ENDPOINT_FLEXIBLE` | Enable flexible endpoint matching |
+| `PGBACKREST_REPO_GCS_CA_BUNDLE_FILE` | CA bundle file for TLS verification |
+| `PGBACKREST_REPO_GCS_CA_BUNDLE_PATH` | CA bundle directory for TLS verification |
 
 ## Standby Backup via SSH
 
@@ -304,22 +424,92 @@ WARNING: PGBACKREST_ENABLE is false but PGBACKREST_AUTO_ENABLE is true - ignorin
 WARNING: PGBACKREST_ENABLE is false but PGBACKREST_RESTORE is true - ignoring restore settings
 ```
 
-## Restore Command Options
+## Point-in-Time Recovery (PITR)
 
-When performing restores, the following pgBackRest command-line options are available regardless of `PGBACKREST_ENABLE` setting:
-
-| Option | Description |
-|--------|-------------|
-| `delta` | Restore using checksum differences instead of timestamp |
-| `force` | Force restore operation, bypassing safety checks |
-
-These are pgBackRest CLI options and work independently of the container's ENABLE setting. For example:
+The container supports comprehensive Point-in-Time Recovery options. Configure restore targets using environment variables:
 
 ```yaml
-environment:
-  POSTGRES_PASSWORD: secret
-  PGBACKREST_ENABLE: "false"  # Backup disabled
-  PGBACKREST_RESTORE_DELTA: "true"  # But delta restore still works when needed
+services:
+  postgresql:
+    image: ghcr.io/supanadit/containers/postgresql:17.6-r0.0.19
+    environment:
+      POSTGRES_PASSWORD: secret
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_STANZA: default
+      // highlight-start
+      # PITR Target Options (choose one or more)
+      PGBACKREST_RESTORE_TARGET_IMMEDIATE: "true"           # Stop at immediate consistency point
+      # PGBACKREST_RESTORE_TARGET_XID: "12345"              # Transaction ID
+      # PGBACKREST_RESTORE_TARGET_LSN: "0/3000000"          # Log Sequence Number
+      # PGBACKREST_RESTORE_TARGET_NAME: "my_restore_point"  # Named restore point
+      # PGBACKREST_RESTORE_TARGET: "2025-01-15 14:30:00+07" # Timestamp target
+      # PGBACKREST_RESTORE_TARGET_TIMELINE: "latest"        # Timeline
+      # PGBACKREST_RESTORE_TARGET_ACTION: "pause"           # Action at target: pause/promote/shutdown
+      # PGBACKREST_RESTORE_RECOVERY_TARGET_TLI: "1"         # Recovery target timeline
+      # PGBACKREST_RESTORE_RECOVERY_TARGET_ACTION: "promote" # Action at recovery target
+      // highlight-end
+      # Additional restore options
+      PGBACKREST_RESTORE_TYPE: "name"        # Restore type: name, time, xid, lsn, immediate
+      PGBACKREST_RESTORE_DELTA: "true"       # Use checksum-based delta restore
+      PGBACKREST_RESTORE_FORCE: "false"      # Force restore operation
+      PGBACKREST_RESTORE_SET: "latest"      # Select specific backup set
+      # PGBACKREST_RESTORE_TABLESPACE_MAP: "old_dir=/new_dir,ts2=/mnt/ts"  # Remap tablespaces
+    volumes:
+      - ./.data:/usr/local/pgsql/data
+      - ./.backup:/usr/local/pgsql/backup
+```
+
+### PITR Configuration Options
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_RESTORE_TARGET` | Recovery target time (timestamp) |
+| `PGBACKREST_RESTORE_TARGET_XID` | Recovery target transaction ID |
+| `PGBACKREST_RESTORE_TARGET_LSN` | Recovery target LSN (Log Sequence Number) |
+| `PGBACKREST_RESTORE_TARGET_NAME` | Named restore point to recover to |
+| `PGBACKREST_RESTORE_TARGET_IMMEDIATE` | Stop at immediate consistency point |
+| `PGBACKREST_RESTORE_TARGET_TIMELINE` | Timeline to recover to (e.g., `latest`) |
+| `PGBACKREST_RESTORE_TARGET_ACTION` | Action at target: `pause`, `promote`, `shutdown` |
+| `PGBACKREST_RESTORE_RECOVERY_TARGET_TLI` | Recovery target timeline ID |
+| `PGBACKREST_RESTORE_RECOVERY_TARGET_ACTION` | Recovery target action: `pause`, `promote`, `shutdown` |
+| `PGBACKREST_RESTORE_TYPE` | Restore type: `name`, `time`, `xid`, `lsn`, `immediate` |
+| `PGBACKREST_RESTORE_DELTA` | Use checksum-based delta restore (default: true) |
+| `PGBACKREST_RESTORE_FORCE` | Force restore, bypassing safety checks |
+| `PGBACKREST_RESTORE_SET` | Select specific backup set (e.g., `latest`) |
+| `PGBACKREST_RESTORE_TABLESPACE_MAP` | Remap tablespaces during restore (format: `old_dir=/new_dir`) |
+
+### Example: Restore to Named Restore Point
+
+```yaml
+services:
+  postgresql:
+    environment:
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_RESTORE_TARGET_NAME: "before_major_change"
+      PGBACKREST_RESTORE_TYPE: "name"
+```
+
+### Example: Restore to Specific Timestamp
+
+```yaml
+services:
+  postgresql:
+    environment:
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_RESTORE_TARGET: "2025-01-15 14:30:00+07"
+      PGBACKREST_RESTORE_TYPE: "time"
+      PGBACKREST_RESTORE_TARGET_ACTION: "promote"
+```
+
+### Example: Immediate Recovery with Tablespace Remapping
+
+```yaml
+services:
+  postgresql:
+    environment:
+      PGBACKREST_ENABLE: "true"
+      PGBACKREST_RESTORE_TARGET_IMMEDIATE: "true"
+      PGBACKREST_RESTORE_TABLESPACE_MAP: "/old/ts1=/mnt/storage/ts1,/old/ts2=/mnt/storage/ts2"
 ```
 
 ## Patroni Integration
@@ -374,3 +564,126 @@ services:
 - Standby backup (`pg2-host`) requires SSH access to primary
 - Not compatible with Kubernetes (no SSH between pods)
 - For Kubernetes, use `PGBACKREST_BACKUP_STANDBY: "n"` with S3 backup
+
+## Environment Variables Reference
+
+### General Configuration
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_ENABLE` | `false` | Enable pgBackRest backup/restore |
+| `PGBACKREST_STANZA` | `default` | pgBackRest stanza name |
+| `PGBACKREST_PASSWORD` | - | PostgreSQL password for pgBackRest connection |
+
+### Automatic Backup
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_AUTO_ENABLE` | `false` | Enable automatic backup scheduling |
+| `PGBACKREST_AUTO_FULL_CRON` | `0 2 * * *` | Full backup cron schedule |
+| `PGBACKREST_AUTO_DIFF_CRON` | `20 2,8,14,20 * * *` | Differential backup cron schedule |
+| `PGBACKREST_AUTO_INCR_CRON` | `*/15 * * * *` | Incremental backup cron schedule |
+| `PGBACKREST_AUTO_TIMEZONE` | `UTC` | Timezone for cron schedules |
+| `PGBACKREST_AUTO_PRIMARY_ONLY` | `true` | Only run backups on primary |
+| `PGBACKREST_AUTO_FIRST_INCR_DELAY` | `120` | Delay before first incremental backup (seconds) |
+
+### Backup Performance & Verification
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_BACKUP_START_FAST` | `false` | Force checkpoint before backup |
+| `PGBACKREST_BACKUP_STOP_AUTO` | `false` | Stop PostgreSQL after backup |
+| `PGBACKREST_BACKUP_VERIFY` | `true` | Verify backup after creation |
+| `PGBACKREST_PROCESS_MAX` | - | Parallel processes for backup/restore |
+| `PGBACKREST_BACKUP_STANDBY` | - | Backup from standby: `y`, `prefer`, `n` |
+
+### Storage & Retention
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_REPO_TYPE` | `posix` | Repository type: `posix`, `s3`, `gcs`, `sftp`, `azure` |
+| `PGBACKREST_REPO_PATH` | - | Repository path override |
+| `PGBACKREST_REPO_RETENTION_FULL` | `2` | Full backup retention count |
+| `PGBACKREST_REPO_RETENTION_DIFF` | `6` | Differential backup retention count |
+| `PGBACKREST_REPO_RETENTION_FULL_TYPE` | - | Retention type: `full` or `backup` |
+| `PGBACKREST_ARCHIVE_ASYNC` | `false` | Enable async WAL archiving |
+| `PGBACKREST_SPARSE_TABLE` | `false` | Enable sparse table support |
+| `PGBACKREST_REPO_COMPRESSION` | `gzip` | Compression: `gzip`, `lz4`, `zstd` |
+
+### S3 Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_S3_BUCKET` | S3 bucket name |
+| `PGBACKREST_REPO_S3_ENDPOINT` | S3 endpoint URL |
+| `PGBACKREST_REPO_S3_REGION` | S3 region |
+| `PGBACKREST_REPO_S3_KEY` | S3 access key |
+| `PGBACKREST_REPO_S3_KEY_SECRET` | S3 secret key |
+| `PGBACKREST_REPO_S3_BUCKET_REGION` | Explicit bucket region |
+| `PGBACKREST_REPO_S3_ENDPOINT_FLEXIBLE` | Flexible endpoint matching |
+| `PGBACKREST_REPO_S3_URI_STYLE` | URI style: `path` or `host` |
+| `PGBACKREST_REPO_S3_PORT` | S3 port |
+| `PGBACKREST_REPO_S3_VERIFY_TLS` | Verify TLS certificates |
+| `PGBACKREST_REPO_S3_CA_FILE` | CA bundle file |
+| `PGBACKREST_REPO_S3_CA_PATH` | CA bundle path |
+| `PGBACKREST_REPO_S3_STORAGE_CLASS` | Storage class |
+| `PGBACKREST_REPO_S3_TOKEN` | STS token |
+
+### GCS Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_GCS_BUCKET` | GCS bucket name |
+| `PGBACKREST_REPO_GCS_ENDPOINT` | GCS endpoint |
+| `PGBACKREST_REPO_GCS_KEY` | Service account key |
+| `PGBACKREST_REPO_GCS_KEY_TYPE` | Key type |
+| `PGBACKREST_REPO_GCS_USER_PROJECT` | GCP project for requester-pays |
+| `PGBACKREST_REPO_GCS_ENDPOINT_FLEXIBLE` | Flexible endpoint matching |
+| `PGBACKREST_REPO_GCS_CA_BUNDLE_FILE` | CA bundle file |
+| `PGBACKREST_REPO_GCS_CA_BUNDLE_PATH` | CA bundle path |
+
+### SFTP Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_SFTP_HOST` | SFTP host |
+| `PGBACKREST_REPO_SFTP_HOST_PORT` | SFTP port |
+| `PGBACKREST_REPO_SFTP_HOST_USER` | SFTP user |
+| `PGBACKREST_REPO_SFTP_PRIVATE_KEY_FILE` | Private key path |
+| `PGBACKREST_REPO_SFTP_PUBLIC_KEY_FILE` | Public key path |
+| `PGBACKREST_REPO_SFTP_HOST_KEY_HASH_TYPE` | Host key hash type |
+| `PGBACKREST_REPO_SFTP_HOST_KEY_CHECK_TYPE` | Host key check type |
+| `PGBACKREST_REPO_SFTP_KNOWN_HOSTS` | Known hosts file |
+| `PGBACKREST_REPO_SFTP_PRIVATE_KEY_PASSPHRASE` | Key passphrase |
+
+### Standby Backup (SSH)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_PRIMARY_HOST` | - | Primary hostname |
+| `PGBACKREST_PRIMARY_PORT` | `5432` | Primary PostgreSQL port |
+| `PGBACKREST_PRIMARY_PATH` | - | Primary data directory |
+| `PGBACKREST_PRIMARY_USER` | `postgres` | Primary user |
+| `PGBACKREST_PRIMARY_SSH_PORT` | `22` | Primary SSH port |
+| `PGBACKREST_PRIMARY_SSH_USER` | `postgres` | Primary SSH user |
+| `PGBACKREST_PRIMARY_SSH_KEY_FILE` | `/home/postgres/.ssh/id_rsa` | SSH key file |
+| `PGBACKREST_PRIMARY_SSH_STRICT_HOST_KEY_CHECKING` | `yes` | Strict host key checking |
+
+### Point-in-Time Recovery
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_RESTORE_TYPE` | Restore type: `name`, `time`, `xid`, `lsn`, `immediate` |
+| `PGBACKREST_RESTORE_TARGET` | Recovery target timestamp |
+| `PGBACKREST_RESTORE_TARGET_XID` | Recovery target transaction ID |
+| `PGBACKREST_RESTORE_TARGET_LSN` | Recovery target LSN |
+| `PGBACKREST_RESTORE_TARGET_NAME` | Named restore point |
+| `PGBACKREST_RESTORE_TARGET_IMMEDIATE` | Stop at immediate consistency |
+| `PGBACKREST_RESTORE_TARGET_TIMELINE` | Target timeline |
+| `PGBACKREST_RESTORE_TARGET_ACTION` | Action at target: `pause`, `promote`, `shutdown` |
+| `PGBACKREST_RESTORE_RECOVERY_TARGET_TLI` | Recovery target timeline ID |
+| `PGBACKREST_RESTORE_RECOVERY_TARGET_ACTION` | Recovery target action |
+| `PGBACKREST_RESTORE_DELTA` | Use delta restore (checksum-based) |
+| `PGBACKREST_RESTORE_FORCE` | Force restore operation |
+| `PGBACKREST_RESTORE_SET` | Select specific backup set |
+| `PGBACKREST_RESTORE_TABLESPACE_MAP` | Tablespace remapping (format: `old=/new`) |
