@@ -594,6 +594,13 @@ services:
 | `PGBACKREST_BACKUP_START_FAST` | `false` | Force checkpoint before backup |
 | `PGBACKREST_BACKUP_STOP_AUTO` | `false` | Stop PostgreSQL after backup |
 | `PGBACKREST_BACKUP_VERIFY` | `true` | Verify backup after creation |
+| `PGBACKREST_BACKUP_CHECKSUM_PAGE` | `false` | Validate data page checksums during backup |
+| `PGBACKREST_BACKUP_ARCHIVE_CHECK` | `true` | Check WAL segments in archive |
+| `PGBACKREST_BACKUP_ARCHIVE_COPY` | `false` | Copy WAL segments for backup consistency |
+| `PGBACKREST_BACKUP_EXPIRE_AUTO` | `false` | Auto-run expire after backup |
+| `PGBACKREST_BACKUP_RESUME` | `true` | Allow resuming failed backup |
+| `PGBACKREST_BACKUP_EXCLUDE` | - | Exclude paths from backup (comma-separated) |
+| `PGBACKREST_BACKUP_ANNOTATION` | - | Backup annotations (format: key=value,key2=value2) |
 | `PGBACKREST_PROCESS_MAX` | - | Parallel processes for backup/restore |
 | `PGBACKREST_BACKUP_STANDBY` | - | Backup from standby: `y`, `prefer`, `n` |
 
@@ -606,9 +613,35 @@ services:
 | `PGBACKREST_REPO_RETENTION_FULL` | `2` | Full backup retention count |
 | `PGBACKREST_REPO_RETENTION_DIFF` | `6` | Differential backup retention count |
 | `PGBACKREST_REPO_RETENTION_FULL_TYPE` | - | Retention type: `full` or `backup` |
+| `PGBACKREST_REPO_RETENTION_ARCHIVE` | - | WAL archive retention count |
+| `PGBACKREST_REPO_RETENTION_ARCHIVE_TYPE` | - | WAL retention type: `full`, `diff`, `incr` |
+| `PGBACKREST_REPO_HARDLINK` | `false` | Create hardlinks for local backups |
+| `PGBACKREST_REPO_SYMLINK` | `false` | Create symlinks in repository |
+| `PGBACKREST_REPO_CIPHER_TYPE` | - | Encryption cipher: `none`, `aes-256-cbc` |
+| `PGBACKREST_REPO_CIPHER_PASS` | - | Encryption passphrase |
 | `PGBACKREST_ARCHIVE_ASYNC` | `false` | Enable async WAL archiving |
 | `PGBACKREST_SPARSE_TABLE` | `false` | Enable sparse table support |
 | `PGBACKREST_REPO_COMPRESSION` | `gzip` | Compression: `gzip`, `lz4`, `zstd` |
+| `PGBACKREST_COMPRESS_LEVEL` | - | Compression level (0-9 for gzip, 0-19 for zstd) |
+| `PGBACKREST_COMPRESS_LEVEL_NETWORK` | - | Network compression level |
+
+### Performance & Tuning
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PGBACKREST_BUFFER_SIZE` | - | Buffer size for I/O (16KiB-16MiB) |
+| `PGBACKREST_IO_TIMEOUT` | - | I/O timeout |
+| `PGBACKREST_DB_TIMEOUT` | - | Database query timeout |
+| `PGBACKREST_PROTOCOL_TIMEOUT` | - | Protocol timeout |
+| `PGBACKREST_ARCHIVE_GET_QUEUE_MAX` | - | Max size of archive-get queue |
+| `PGBACKREST_ARCHIVE_PUSH_QUEUE_MAX` | - | Max size of archive-push queue |
+| `PGBACKREST_ARCHIVE_TIMEOUT` | - | Archive command timeout |
+| `PGBACKREST_TCP_KEEP_ALIVE_COUNT` | - | TCP keep-alive count |
+| `PGBACKREST_TCP_KEEP_ALIVE_IDLE` | - | TCP keep-alive idle time |
+| `PGBACKREST_TCP_KEEP_ALIVE_INTERVAL` | - | TCP keep-alive interval |
+| `PGBACKREST_SCK_KEEP_ALIVE` | `false` | Enable socket keep-alive |
+| `PGBACKREST_NEUTRAL_UMASK` | `false` | Use neutral umask for files |
+| `PGBACKREST_MANIFEST_SAVE_THRESHOLD` | - | Manifest save threshold |
 
 ### S3 Configuration
 
@@ -683,6 +716,12 @@ services:
 | `PGBACKREST_RESTORE_TARGET_ACTION` | Action at target: `pause`, `promote`, `shutdown` |
 | `PGBACKREST_RESTORE_RECOVERY_TARGET_TLI` | Recovery target timeline ID |
 | `PGBACKREST_RESTORE_RECOVERY_TARGET_ACTION` | Recovery target action |
+| `PGBACKREST_RESTORE_ARCHIVE_MODE` | Archive mode on restore: `off`, `on`, `always` |
+| `PGBACKREST_RESTORE_LINK_ALL` | Restore all symlinks |
+| `PGBACKREST_RESTORE_LINK_MAP` | Modify symlink destinations (format: `old=/new`) |
+| `PGBACKREST_RESTORE_DB_INCLUDE` | Include only specified databases (comma-separated) |
+| `PGBACKREST_RESTORE_DB_EXCLUDE` | Exclude databases from restore (comma-separated) |
+| `PGBACKREST_RESTORE_RECOVERY_OPTION` | Set postgresql.auto.conf options (format: `key=value`) |
 | `PGBACKREST_RESTORE_DELTA` | Use delta restore (checksum-based) |
 | `PGBACKREST_RESTORE_FORCE` | Force restore operation |
 | `PGBACKREST_RESTORE_SET` | Select specific backup set |
