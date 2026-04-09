@@ -597,6 +597,7 @@ services:
 | `PGBACKREST_BACKUP_CHECKSUM_PAGE` | `false` | Validate data page checksums during backup |
 | `PGBACKREST_BACKUP_ARCHIVE_CHECK` | `true` | Check WAL segments in archive |
 | `PGBACKREST_BACKUP_ARCHIVE_COPY` | `false` | Copy WAL segments for backup consistency |
+| `PGBACKREST_BACKUP_ARCHIVE_MISSING_RETRY` | `true` | Retry WAL segments previously reported missing |
 | `PGBACKREST_BACKUP_EXPIRE_AUTO` | `false` | Auto-run expire after backup |
 | `PGBACKREST_BACKUP_RESUME` | `true` | Allow resuming failed backup |
 | `PGBACKREST_BACKUP_EXCLUDE` | - | Exclude paths from backup (comma-separated) |
@@ -661,6 +662,23 @@ services:
 | `PGBACKREST_REPO_S3_CA_PATH` | CA bundle path |
 | `PGBACKREST_REPO_S3_STORAGE_CLASS` | Storage class |
 | `PGBACKREST_REPO_S3_TOKEN` | STS token |
+| `PGBACKREST_REPO_S3_KMS_KEY_ID` | AWS KMS key ID for SSE encryption |
+| `PGBACKREST_REPO_S3_SSE_CUSTOMER_KEY` | SSE-C customer key |
+| `PGBACKREST_REPO_S3_ROLE` | IAM role for temporary credentials |
+| `PGBACKREST_REPO_S3_KEY_TYPE` | Key type: `shared`, `auto`, `web-id` |
+| `PGBACKREST_REPO_S3_REQUESTER_PAYS` | Enable S3 requester pays |
+
+### Repository Storage Configuration (Unified)
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_STORAGE_HOST` | Custom storage host |
+| `PGBACKREST_REPO_STORAGE_PORT` | Custom storage port |
+| `PGBACKREST_REPO_STORAGE_CA_FILE` | CA bundle file |
+| `PGBACKREST_REPO_STORAGE_CA_PATH` | CA bundle path |
+| `PGBACKREST_REPO_STORAGE_VERIFY_TLS` | Verify TLS certificates |
+| `PGBACKREST_REPO_STORAGE_UPLOAD_CHUNK_SIZE` | Upload chunk size |
+| `PGBACKREST_REPO_STORAGE_TAG` | Storage tags (comma-separated) |
 
 ### GCS Configuration
 
@@ -689,6 +707,38 @@ services:
 | `PGBACKREST_REPO_SFTP_KNOWN_HOSTS` | Known hosts file |
 | `PGBACKREST_REPO_SFTP_PRIVATE_KEY_PASSPHRASE` | Key passphrase |
 
+### Repository Host Configuration (Remote Repository)
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_REPO_HOST` | Remote repository host |
+| `PGBACKREST_REPO_HOST_PORT` | Remote repository port |
+| `PGBACKREST_REPO_HOST_USER` | Remote repository user |
+| `PGBACKREST_REPO_HOST_TYPE` | Protocol type: `ssh`, `tls` |
+| `PGBACKREST_REPO_HOST_KEY_FILE` | SSH private key file |
+| `PGBACKREST_REPO_HOST_CA_FILE` | CA certificate file |
+| `PGBACKREST_REPO_HOST_CA_PATH` | CA certificate path |
+| `PGBACKREST_REPO_HOST_CERT_FILE` | Client certificate file |
+| `PGBACKREST_REPO_HOST_CONFIG` | Config file on repository host |
+| `PGBACKREST_REPO_HOST_CONFIG_PATH` | Config path on repository host |
+
+### PostgreSQL Stanza Configuration (pg1-host)
+
+| Variable | Description |
+|----------|-------------|
+| `PGBACKREST_PG_DATABASE` | Database name for connection (default: postgres) |
+| `PGBACKREST_PG_HOST` | Remote PostgreSQL host |
+| `PGBACKREST_PG_HOST_PORT` | Remote PostgreSQL port |
+| `PGBACKREST_PG_HOST_USER` | Remote PostgreSQL user |
+| `PGBACKREST_PG_HOST_TYPE` | Protocol type: `ssh`, `tls` |
+| `PGBACKREST_PG_HOST_KEY_FILE` | SSH key for PostgreSQL host |
+| `PGBACKREST_PG_HOST_CA_FILE` | CA file for PostgreSQL host |
+| `PGBACKREST_PG_HOST_CA_PATH` | CA path for PostgreSQL host |
+| `PGBACKREST_PG_HOST_CERT_FILE` | Client cert for PostgreSQL host |
+| `PGBACKREST_PG_HOST_CONFIG` | Config file on PostgreSQL host |
+| `PGBACKREST_PG_HOST_CONFIG_PATH` | Config include path on PostgreSQL host |
+| `PGBACKREST_PG_HOST_CMD` | pgBackRest command path on remote host |
+
 ### Standby Backup (SSH)
 
 | Variable | Default | Description |
@@ -701,6 +751,11 @@ services:
 | `PGBACKREST_PRIMARY_SSH_USER` | `postgres` | Primary SSH user |
 | `PGBACKREST_PRIMARY_SSH_KEY_FILE` | `/home/postgres/.ssh/id_rsa` | SSH key file |
 | `PGBACKREST_PRIMARY_SSH_STRICT_HOST_KEY_CHECKING` | `yes` | Strict host key checking |
+| `PGBACKREST_PRIMARY_HOST_CA_FILE` | - | CA file for primary connection |
+| `PGBACKREST_PRIMARY_HOST_CA_PATH` | - | CA path for primary connection |
+| `PGBACKREST_PRIMARY_HOST_CERT_FILE` | - | Client cert for primary connection |
+| `PGBACKREST_PRIMARY_HOST_CONFIG` | - | Config file on primary host |
+| `PGBACKREST_PRIMARY_HOST_CONFIG_PATH` | - | Config path on primary host |
 
 ### Point-in-Time Recovery
 
@@ -726,3 +781,4 @@ services:
 | `PGBACKREST_RESTORE_FORCE` | Force restore operation |
 | `PGBACKREST_RESTORE_SET` | Select specific backup set |
 | `PGBACKREST_RESTORE_TABLESPACE_MAP` | Tablespace remapping (format: `old=/new`) |
+| `PGBACKREST_RESTORE_TABLESPACE_MAP_ALL` | Restore all tablespaces to directory |
