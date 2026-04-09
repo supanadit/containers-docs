@@ -107,6 +107,7 @@ services:
       PGBACKREST_ENABLE: "true"
       // highlight-start
       PGBACKREST_REPO_RETENTION_FULL_TYPE: "full"  # WAL retention type
+      PGBACKREST_REPO_RETENTION_HISTORY: "365"    # Keep backup history for 1 year
       PGBACKREST_ARCHIVE_ASYNC: "true"             # Async WAL archiving for performance
       PGBACKREST_SPARSE_TABLE: "true"              # Faster backup on supported filesystems
       PGBACKREST_REPO_COMPRESSION: "zstd"          # Backup compression (gzip/lz4/zstd)
@@ -616,6 +617,7 @@ services:
 | `PGBACKREST_REPO_RETENTION_FULL_TYPE` | - | Retention type: `full` or `backup` |
 | `PGBACKREST_REPO_RETENTION_ARCHIVE` | - | WAL archive retention count |
 | `PGBACKREST_REPO_RETENTION_ARCHIVE_TYPE` | - | WAL retention type: `full`, `diff`, `incr` |
+| `PGBACKREST_REPO_RETENTION_HISTORY` | - | Backup history manifest retention days (0 = unexpired only) |
 | `PGBACKREST_REPO_HARDLINK` | `false` | Create hardlinks for local backups |
 | `PGBACKREST_REPO_SYMLINK` | `false` | Create symlinks in repository |
 | `PGBACKREST_REPO_CIPHER_TYPE` | - | Encryption cipher: `none`, `aes-256-cbc` |
