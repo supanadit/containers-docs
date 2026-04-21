@@ -72,9 +72,7 @@ scrape_configs:
 | Scenario | Use Case | Documentation |
 |----------|----------|---------------|
 | [Basic Setup](/docs/prometheus/prometheus-config) | Single node monitoring | Configuration and env vars |
-
 | [With Thanos](/docs/prometheus/thanos) | Long-term storage | Thanos sidecar integration |
-
 | [Features](/docs/prometheus/prometheus-features) | Advanced features | Native histograms, exemplars, etc. |
 
 ## Verifying Prometheus
