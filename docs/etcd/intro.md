@@ -11,11 +11,12 @@ ETCD is a distributed key-value store that provides a reliable way to store data
 
 This container provides a production-ready ETCD setup with:
 
-- **Go 1.24.x** runtime compiled from source
+- **Go 1.24.12** compiled from source
 - **ETCD 3.6.7** with v3 API
-- Environment-driven configuration
-- TLS support out of the box
-- Built-in backup/restore tools
+- **Multi-stage build** for minimal runtime image (`debian:bookworm-slim`)
+- **Environment-driven configuration** for all settings
+- **TLS support** for secure communication
+- **Automatic data directory creation** with proper permissions (700)
 
 ## Quick Start
 
@@ -45,6 +46,18 @@ volumes:
   etcd_data:
 ```
 
+## Built-in Settings
+
+The following settings are hardcoded in the entrypoint for optimal performance:
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `--heartbeat-interval` | 1000 | Heartbeat interval in milliseconds |
+| `--election-timeout` | 5000 | Election timeout in milliseconds |
+| `--snapshot-count` | 5000 | Number of operations before snapshot |
+| `--auto-compaction-retention` | 1 | Auto compaction retention in hours |
+| `--max-request-bytes` | 10485760 | Maximum request size (10MB) |
+
 ## Deployment Scenarios
 
 | Scenario | Use Case | Documentation |
@@ -52,7 +65,6 @@ volumes:
 | [Single Node](./cluster#single-node) | Development/testing | Basic single node |
 | [3-Node Cluster](./cluster#multi-node-cluster) | Production | Multi-node cluster |
 | [TLS Secured](./tls) | Production with security | TLS authentication |
-| [Backup & Restore](./backup) | Data protection | Snapshot management |
 
 ## Common Operations
 
@@ -81,14 +93,26 @@ docker compose exec etcd etcdctl endpoint status
 | `ETCD_DATA_DIR` | Data directory | `/var/lib/etcd` |
 | `ETCD_LISTEN_PEER_URLS` | Peer listening URLs | `http://0.0.0.0:2380` |
 | `ETCD_LISTEN_CLIENT_URLS` | Client listening URLs | `http://0.0.0.0:2379` |
-| `ETCD_ADVERTISE_CLIENT_URLS` | Advertised client URLs | Auto-detected |
-| `ETCD_INITIAL_ADVERTISE_PEER_URLS` | Advertised peer URLs | Auto-detected |
-| `ETCD_INITIAL_CLUSTER` | Initial cluster configuration | Auto-generated |
+| `ETCD_ADVERTISE_CLIENT_URLS` | Advertised client URLs | Auto-detected from container IP |
+| `ETCD_INITIAL_ADVERTISE_PEER_URLS` | Advertised peer URLs | Auto-detected from container IP |
+| `ETCD_INITIAL_CLUSTER` | Initial cluster configuration | Auto-generated from name and IP |
 | `ETCD_INITIAL_CLUSTER_STATE` | Initial cluster state | `new` |
 | `ETCD_INITIAL_CLUSTER_TOKEN` | Cluster token | `etcd-cluster` |
+
+## TLS Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `ETCD_CERT_FILE` | TLS certificate file for client connections |
+| `ETCD_KEY_FILE` | TLS key file for client connections |
+| `ETCD_CLIENT_CERT_AUTH` | Enable client certificate authentication (`true`/`false`) |
+| `ETCD_TRUSTED_CA_FILE` | Trusted CA certificate file |
+| `ETCD_PEER_CERT_FILE` | TLS certificate file for peer connections |
+| `ETCD_PEER_KEY_FILE` | TLS key file for peer connections |
+| `ETCD_PEER_CLIENT_CERT_AUTH` | Enable peer certificate authentication (`true`/`false`) |
+| `ETCD_PEER_TRUSTED_CA_FILE` | Trusted CA file for peers |
 
 ## Next Steps
 
 - [Cluster Setup](./cluster) - Deploy multi-node ETCD clusters
 - [TLS Configuration](./tls) - Secure ETCD with TLS certificates
-- [Backup & Restore](./backup) - Backup and disaster recovery

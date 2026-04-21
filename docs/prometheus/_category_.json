@@ -1,0 +1,8 @@
+{
+  "label": "Prometheus",
+  "position": 5,
+  "link": {
+    "type": "doc",
+    "id": "prometheus/prometheus-intro"
+  }
+}
