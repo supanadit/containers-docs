@@ -154,5 +154,5 @@ FROM pg_stat_replication;
 
 ## Related
 
-- [Sync Modes](./sync_modes) - Understanding single sync, quorum, and async modes
-- [Dynamic Configuration](./dynamic_config) - Change configuration at runtime
+- [Sync Modes](/docs/postgresql/native_ha/sync_modes) - Understanding single sync, quorum, and async modes
+- [Dynamic Configuration](/docs/postgresql/native_ha/dynamic_config) - Change configuration at runtime

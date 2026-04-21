@@ -62,9 +62,9 @@ The following settings are hardcoded in the entrypoint for optimal performance:
 
 | Scenario | Use Case | Documentation |
 |----------|----------|---------------|
-| [Single Node](./cluster#single-node) | Development/testing | Basic single node |
-| [3-Node Cluster](./cluster#multi-node-cluster) | Production | Multi-node cluster |
-| [TLS Secured](./tls) | Production with security | TLS authentication |
+| [Single Node](/docs/etcd/etcd-cluster#single-node) | Development/testing | Basic single node |
+| [3-Node Cluster](/docs/etcd/etcd-cluster#multi-node-cluster) | Production | Multi-node cluster |
+| [TLS Secured](/docs/etcd/etcd-tls) | Production with security | TLS authentication |
 
 ## Common Operations
 
@@ -113,6 +113,6 @@ docker compose exec etcd etcdctl endpoint status
 | `ETCD_PEER_TRUSTED_CA_FILE` | Trusted CA file for peers |
 
 ## Next Steps
+- [Cluster Setup](/docs/etcd/etcd-cluster) - Deploy multi-node ETCD clusters
 
-- [Cluster Setup](./cluster) - Deploy multi-node ETCD clusters
-- [TLS Configuration](./tls) - Secure ETCD with TLS certificates
+- [TLS Configuration](/docs/etcd/etcd-tls) - Secure ETCD with TLS certificates

@@ -231,7 +231,7 @@ environment:
   PGPOOL_PATRONI_ENDPOINTS: "http://postgresql1:8008,http://postgresql2:8008,http://postgresql3:8008"
 ```
 
-See [Patroni Integration](./patroni) for detailed setup.
+See [Patroni Integration](/docs/pgpool-ii/patroni) for detailed setup.
 
 ## SSL/TLS Configuration
 
@@ -337,6 +337,6 @@ services:
 
 ## Related
 
-- [Intro](./) - Basic setup
-- [Patroni](./patroni) - Patroni integration
-- [Troubleshooting](./troubleshooting) - Common issues
+- [Intro](/docs/pgpool-ii/intro) - Basic setup
+- [Patroni](/docs/pgpool-ii/patroni) - Patroni integration
+- [Troubleshooting](/docs/pgpool-ii/troubleshooting) - Common issues

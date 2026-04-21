@@ -11,7 +11,7 @@ WordPress requires a minimum of **64MB PHP memory** to function properly. Settin
 :::
 
 :::info
-For Apache MPM-specific tuning, see [Apache MPM Configuration](./apache_mpm.md).
+For Apache MPM-specific tuning, see [Apache MPM Configuration](/docs/wordpress/apache_mpm).
 :::
 
 ## Low Memory Mode

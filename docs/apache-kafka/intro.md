@@ -62,10 +62,10 @@ volumes:
 
 | Scenario | Use Case | Node Configuration |
 |----------|----------|-------------------|
-| [Single Node](./kraft#single-node) | Development/testing | 1 combined broker+controller |
-| [KRaft Cluster](./kraft#kraft-cluster-combined-roles) | Production | 3 combined broker+controller |
-| [KRaft Separated](./kraft#kraft-cluster-separated-roles) | Large-scale production | 3 controllers + 3 brokers |
-| [SASL Authentication](./sasl) | Secure client connections | SASL_PLAINTEXT authentication |
+| [Single Node](/docs/apache-kafka/apache-kafka-kraft#single-node) | Development/testing | 1 combined broker+controller |
+| [KRaft Cluster](/docs/apache-kafka/apache-kafka-kraft#kraft-cluster-combined-roles) | Production | 3 combined broker+controller |
+| [KRaft Separated](/docs/apache-kafka/apache-kafka-kraft#kraft-cluster-separated-roles) | Large-scale production | 3 controllers + 3 brokers |
+| [SASL Authentication](/docs/apache-kafka/apache-kafka-sasl) | Secure client connections | SASL_PLAINTEXT authentication |
 
 ## Verifying Cluster Health
 
@@ -85,7 +85,7 @@ docker compose exec kafka-1 kafka-topics.sh --bootstrap-server localhost:9092 --
 
 ## Next Steps
 
-- [KRaft Mode](./kraft) - Learn about KRaft deployment scenarios
-- [Configuration](./config) - Environment variables and configuration options
-- [SASL Authentication](./sasl) - Secure your Kafka cluster with SASL
-- [Tips & Tricks](./tips) - Best practices and troubleshooting
+- [KRaft Mode](/docs/apache-kafka/apache-kafka-kraft) - Learn about KRaft deployment scenarios
+- [Configuration](/docs/apache-kafka/apache-kafka-config) - Environment variables and configuration options
+- [SASL Authentication](/docs/apache-kafka/apache-kafka-sasl) - Secure your Kafka cluster with SASL
+- [Tips & Tricks](/docs/apache-kafka/apache-kafka-tips) - Best practices and troubleshooting

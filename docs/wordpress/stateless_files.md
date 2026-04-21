@@ -7,7 +7,7 @@ sidebar_position: 10
 In stateless mode (for serverless deployments), you may need to include PHP files that are not part of the built container image. The `STATELESS_FILE_*` environment variables allow you to specify which files to copy from your persistent volume into the WordPress `wp-content` directory at startup.
 
 :::info
-This feature only works when `IS_STATELESS=true`. See [Serverless](./serverless.md) for more details on stateless mode.
+This feature only works when `IS_STATELESS=true`. See [Serverless](/docs/wordpress/serverless) for more details on stateless mode.
 :::
 
 ## Usage

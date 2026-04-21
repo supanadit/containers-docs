@@ -157,5 +157,5 @@ SELECT client_addr, state, sync_state FROM pg_stat_replication;
 
 ## Related
 
-- [Replica Names](./replica_names) - Understanding application names for quorum mode
-- [Dynamic Configuration](./dynamic_config) - Change sync settings at runtime
+- [Replica Names](/docs/postgresql/native_ha/replica_names) - Understanding application names for quorum mode
+- [Dynamic Configuration](/docs/postgresql/native_ha/dynamic_config) - Change sync settings at runtime

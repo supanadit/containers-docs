@@ -71,9 +71,11 @@ scrape_configs:
 
 | Scenario | Use Case | Documentation |
 |----------|----------|---------------|
-| [Basic Setup](./config) | Single node monitoring | Configuration and env vars |
-| [With Thanos](./thanos) | Long-term storage | Thanos sidecar integration |
-| [Features](./features) | Advanced features | Native histograms, exemplars, etc. |
+| [Basic Setup](/docs/prometheus/prometheus-config) | Single node monitoring | Configuration and env vars |
+
+| [With Thanos](/docs/prometheus/thanos) | Long-term storage | Thanos sidecar integration |
+
+| [Features](/docs/prometheus/prometheus-features) | Advanced features | Native histograms, exemplars, etc. |
 
 ## Verifying Prometheus
 
@@ -90,6 +92,8 @@ curl http://localhost:9090/metrics
 
 ## Next Steps
 
-- [Configuration](./config) - Environment variables and configuration
-- [Features](./features) - Enable advanced Prometheus features
-- [Thanos Integration](./thanos) - Long-term storage with Thanos
+- [Configuration](/docs/prometheus/prometheus-config) - Environment variables and configuration
+
+- [Features](/docs/prometheus/prometheus-features) - Enable advanced Prometheus features
+
+- [Thanos Integration](/docs/prometheus/thanos) - Long-term storage with Thanos

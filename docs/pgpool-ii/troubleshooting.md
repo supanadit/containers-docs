@@ -446,5 +446,5 @@ docker exec pgpool cat /etc/hosts
 
 ## Related
 
-- [Intro](./) - Basic PgPool-II setup
-- [Patroni](./patroni) - Patroni integration
+- [Intro](/docs/pgpool-ii/intro) - Basic PgPool-II setup
+- [Patroni](/docs/pgpool-ii/patroni) - Patroni integration

@@ -196,6 +196,6 @@ kubectl exec postgresql-primary -- /usr/local/bin/pg-reload-sync-config.sh --syn
 
 ## Related
 
-- [Sync Modes](./sync_modes) - Understanding replication modes
-- [Replica Names](./replica_names) - Understanding application names
-- [Troubleshooting](./troubleshooting) - Solving common issues
+- [Sync Modes](/docs/postgresql/native_ha/sync_modes) - Understanding replication modes
+- [Replica Names](/docs/postgresql/native_ha/replica_names) - Understanding application names
+- [Troubleshooting](/docs/postgresql/native_ha/troubleshooting) - Solving common issues

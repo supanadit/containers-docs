@@ -318,6 +318,6 @@ docker compose logs --tail=100 postgresql-primary | grep -i error
 
 ## Related
 
-- [Sync Modes](./sync_modes) - Understanding replication modes
-- [Replica Names](./replica_names) - Application name configuration
-- [Dynamic Configuration](./dynamic_config) - Runtime configuration changes
+- [Sync Modes](/docs/postgresql/native_ha/sync_modes) - Understanding replication modes
+- [Replica Names](/docs/postgresql/native_ha/replica_names) - Application name configuration
+- [Dynamic Configuration](/docs/postgresql/native_ha/dynamic_config) - Runtime configuration changes

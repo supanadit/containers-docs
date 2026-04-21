@@ -13,7 +13,7 @@ If you don't know what the different MPMs are, here is a brief overview:
 - **Event**: This MPM is similar to Worker but is optimized for handling keep-alive connections more efficiently. It uses a separate thread to manage keep-alive connections, allowing worker threads to focus on active requests. This can lead to better performance under high load with many keep-alive connections.
 
 :::info
-For memory-constrained deployments (under 256MB RAM), see [Low Memory Configuration](./low_memory.md) for automatic tuning with `APACHE_LOW_MEMORY_MODE`.
+For memory-constrained deployments (under 256MB RAM), see [Low Memory Configuration](/docs/wordpress/low_memory) for automatic tuning with `APACHE_LOW_MEMORY_MODE`.
 :::
 
 ```yaml

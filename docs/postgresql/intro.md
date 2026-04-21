@@ -37,7 +37,7 @@ Lightweight streaming replication without external dependencies:
 - **Async Mode** - Best performance, no commit waiting
 - **Dynamic Configuration** - Change sync settings at runtime without restart
 
-See [Native HA Documentation](./native_ha/intro) for details.
+See [Native HA Documentation](/docs/postgresql/native_ha/intro) for details.
 
 ### Patroni
 
@@ -47,7 +47,7 @@ Distributed high availability with automatic failover:
 - Automatic leader election
 - Distributed consensus
 
-See [Patroni Documentation](./patroni) for details.
+See [Patroni Documentation](/docs/postgresql/patroni) for details.
 
 ### Patroni + Citus
 
@@ -56,7 +56,7 @@ Distributed PostgreSQL with Citus for horizontal scaling:
 - Citus distributes tables across multiple nodes
 - Patroni manages HA for each node
 
-See [Patroni Citus Documentation](./patroni_citus) for details.
+See [Patroni Citus Documentation](/docs/postgresql/patroni_citus) for details.
 
 ## Important Notes
 

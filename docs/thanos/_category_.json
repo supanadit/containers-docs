@@ -1,0 +1,8 @@
+{
+    "label": "Thanos",
+    "position": 6,
+    "link": {
+        "type": "doc",
+        "id": "thanos/thanos-intro"
+    }
+}

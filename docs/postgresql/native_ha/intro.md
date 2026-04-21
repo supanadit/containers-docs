@@ -97,7 +97,7 @@ When using `-1` (infinite) for standby delay settings, monitor the primary's WAL
 
 ## Next Steps
 
-- [Replication Modes](./sync_modes) - Choose between single sync, quorum sync, or async
-- [Replica Names](./replica_names) - Understand application names for quorum mode
-- [Dynamic Configuration](./dynamic_config) - Change sync settings at runtime
-- [Troubleshooting](./troubleshooting) - Solve common issues
+- [Replication Modes](/docs/postgresql/native_ha/sync_modes) - Choose between single sync, quorum sync, or async
+- [Replica Names](/docs/postgresql/native_ha/replica_names) - Understand application names for quorum mode
+- [Dynamic Configuration](/docs/postgresql/native_ha/dynamic_config) - Change sync settings at runtime
+- [Troubleshooting](/docs/postgresql/native_ha/troubleshooting) - Solve common issues

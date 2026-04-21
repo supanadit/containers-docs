@@ -428,7 +428,7 @@ Client → PgPool-II → Patroni Cluster
 
 ## Related
 
-- [Intro](./) - Basic setup
-- [Patroni](./patroni) - Patroni integration
-- [Config](./config) - Configuration reference
-- [Troubleshooting](./troubleshooting) - Common issues
+- [Intro](/docs/pgpool-ii/intro) - Basic setup
+- [Patroni](/docs/pgpool-ii/patroni) - Patroni integration
+- [Config](/docs/pgpool-ii/config) - Configuration reference
+- [Troubleshooting](/docs/pgpool-ii/troubleshooting) - Common issues
