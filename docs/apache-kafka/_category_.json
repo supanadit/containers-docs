@@ -1,0 +1,8 @@
+{
+  "label": "Apache Kafka",
+  "position": 4,
+  "link": {
+    "type": "doc",
+    "id": "apache-kafka/apache-kafka-intro"
+  }
+}
