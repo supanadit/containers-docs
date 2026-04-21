@@ -127,9 +127,9 @@ Thanos can run in multiple modes:
 
 | Scenario | Use Case | Documentation |
 |----------|----------|---------------|
-| [Basic Query](./#query) | Query metrics from Prometheus | Query component |
+| [Basic Query](#query-configuration) | Query metrics from Prometheus | Query component |
 | [With Prometheus](/docs/prometheus/thanos) | Long-term storage | Prometheus + Thanos |
-| [Multi-tenant](./#receive) | Receive remote writes | Receiver configuration |
+| [Multi-tenant](#receive-configuration) | Receive remote writes | Receiver configuration |
 
 ## Example: Full Stack with Prometheus
 

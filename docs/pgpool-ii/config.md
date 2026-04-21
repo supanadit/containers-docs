@@ -337,6 +337,6 @@ services:
 
 ## Related
 
-- [Intro](/docs/pgpool-ii/intro) - Basic setup
+- [Intro](/docs/pgpool-ii) - Basic setup
 - [Patroni](/docs/pgpool-ii/patroni) - Patroni integration
 - [Troubleshooting](/docs/pgpool-ii/troubleshooting) - Common issues

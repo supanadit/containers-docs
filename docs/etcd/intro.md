@@ -1,5 +1,6 @@
 ---
 id: etcd-intro
+slug: /etcd
 title: ETCD
 ---
 
