@@ -46,7 +46,7 @@ services:
       KAFKA_NUM_PARTITIONS: "3"
       KAFKA_LOG_RETENTION_HOURS: "168"
     volumes:
-      - kafka_data:/opt/kafka/data
+      - kafka_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s

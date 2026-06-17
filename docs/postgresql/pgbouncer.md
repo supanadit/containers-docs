@@ -18,5 +18,5 @@ services:
       // highlight-next-line
       PGBOUNCER_ENABLE: "true"
     volumes:
-      - ./.data:/usr/local/pgsql/data
+      - ./.data:/opt/containers/data
 ```

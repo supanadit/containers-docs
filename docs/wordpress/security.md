@@ -68,7 +68,7 @@ wordpress:
     IS_PROTECT_XMLRPC: "true"
     IS_PROTECT_WPCONFIG: "true"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Security Recommendations

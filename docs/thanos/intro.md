@@ -57,7 +57,7 @@ Thanos can run in multiple modes:
 | `THANOS_COMPONENT` | Component to run | `query` |
 | `THANOS_HTTP_ADDRESS` | HTTP listen address | `0.0.0.0:10902` |
 | `THANOS_GRPC_ADDRESS` | gRPC listen address | `0.0.0.0:10901` |
-| `THANOS_DATA_DIR` | Data directory | `/opt/thanos/data` |
+| `THANOS_DATA_DIR` | Data directory | `/opt/containers/data` |
 
 ### Query Configuration
 
@@ -142,7 +142,7 @@ services:
       PROMETHEUS_STORAGE_TSDB_MIN_BLOCK_DURATION: "2h"
       PROMETHEUS_STORAGE_TSDB_MAX_BLOCK_DURATION: "2h"
     volumes:
-      - prometheus_data:/opt/prometheus/data
+      - prometheus_data:/opt/containers/data
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
   thanos-sidecar:
@@ -156,7 +156,7 @@ services:
       THANOS_S3_SECRET_KEY: "password"
       THANOS_S3_INSECURE: "true"
     volumes:
-      - prometheus_data:/opt/thanos/data
+      - prometheus_data:/opt/containers/data
 
   thanos-store:
     image: ghcr.io/supanadit/containers/thanos:0.40.1-r4
@@ -186,10 +186,10 @@ volumes:
 
 Different components require different volume mounts:
 
-- **Sidecar**: Mount Prometheus data to `/opt/thanos/data`
-- **Store**: Use separate volume at `/opt/thanos/data`
-- **Compact**: Use separate volume at `/opt/thanos/data`
-- **Receive**: Use volume at `/opt/thanos/data`
+- **Sidecar**: Mount Prometheus data to `/opt/containers/data`
+- **Store**: Use separate volume at `/opt/containers/data`
+- **Compact**: Use separate volume at `/opt/containers/data`
+- **Receive**: Use volume at `/opt/containers/data`
 
 ### S3 Compatibility
 

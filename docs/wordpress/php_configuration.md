@@ -102,5 +102,5 @@ wordpress:
     PHP_OPCACHE_MEMORY: 64
     PHP_OPCACHE_MAX_ACCELERATED_FILES: 500
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

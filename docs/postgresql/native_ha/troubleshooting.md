@@ -91,7 +91,7 @@ SELECT * FROM pg_stat_replication;
 
 4. **Check standby.signal exists:**
    ```bash
-   ls -la /usr/local/pgsql/data/standby.signal
+   ls -la /opt/containers/data/standby.signal
    ```
 
 ## Configuration Issues
@@ -194,12 +194,12 @@ psql -h postgresql-primary -U postgres -c "SELECT application_name FROM pg_stat_
 
 2. **Check config syntax:**
    ```bash
-   su - postgres -c "/usr/local/pgsql/bin/postgresql -D /usr/local/pgsql/data -C synchronous_standby_names"
+   su - postgres -c "/usr/local/pgsql/bin/postgresql -D /opt/containers/data -C synchronous_standby_names"
    ```
 
 3. **Check logs:**
    ```bash
-   cat /usr/local/pgsql/log/*.log
+   cat /opt/containers/logs/*.log
    ```
 
 ## Performance Issues

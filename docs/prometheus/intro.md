@@ -20,7 +20,7 @@ This container provides a production-ready Prometheus setup with:
 
 ## Prerequisites
 
-Prometheus requires a configuration file mounted at `/etc/prometheus/prometheus.yml`. Without this file, the container will exit with an error.
+Prometheus requires a configuration file mounted at `/opt/containers/config/prometheus.yml`. Without this file, the container will exit with an error.
 
 ## Quick Start
 
@@ -34,8 +34,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - prometheus_data:/opt/prometheus/data
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/opt/containers/data
+      - ./config/prometheus.yml:/opt/containers/config/prometheus.yml
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:9090/-/healthy || exit 1"]
       interval: 10s

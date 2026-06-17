@@ -19,5 +19,5 @@ wordpress:
     // highlight-next-line
     IS_HTTPS: "true"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

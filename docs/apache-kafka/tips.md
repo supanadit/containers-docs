@@ -69,12 +69,12 @@ docker compose logs -f kafka-1
 
 # List cluster metadata
 docker compose exec kafka-1 kafka-metadata.sh \
-  --snapshot /opt/kafka/data/__cluster_metadata-0/00000000000000000000.log \
+  --snapshot /opt/containers/data/__cluster_metadata-0/00000000000000000000.log \
   --cluster-id $(cat /opt/kafka/cluster.id)
 
 # Check KRaft cluster status
 docker compose exec kafka-1 kafka-storage.sh \
-  cluster-id -c /opt/kafka/config/server.properties
+  cluster-id -c /opt/containers/config/server.properties
 ```
 
 ## Advertised Listeners
@@ -87,7 +87,7 @@ KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-1:9092"
 
 ## Data Directory
 
-The data directory (`/opt/kafka/data`) stores Kafka's commit log files. Ensure:
+The data directory (`/opt/containers/data`) stores Kafka's commit log files. Ensure:
 - Adequate disk space (minimum 10% free)
 - Proper permissions (755/700)
 - Regular backups

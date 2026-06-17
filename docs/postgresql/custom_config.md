@@ -14,5 +14,5 @@ services:
       POSTGRESQL_CONFIG_SHARED_BUFFERS: 16GB
       POSTGRESQL_CONFIG_EFFECTIVE_CACHE_SIZE: 32GB
     volumes:
-      - ./.data:/usr/local/pgsql/data
+      - ./.data:/opt/containers/data
 ```

@@ -25,7 +25,7 @@ services:
       - "2379:2379"
       - "2380:2380"
     volumes:
-      - etcd_data:/var/lib/etcd
+      - etcd_data:/opt/containers/data
     networks:
       - postgres-cluster
     healthcheck:
@@ -64,8 +64,8 @@ services:
       PGBACKREST_ENABLE: "true"
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql1_data:/usr/local/pgsql/data
-      - pgbackrest_data:/usr/local/pgsql/backup
+      - postgresql1_data:/opt/containers/data
+      - pgbackrest_data:/opt/containers/backup
     networks:
       - postgres-cluster
     healthcheck:
@@ -103,8 +103,8 @@ services:
       PGBACKREST_ENABLE: "true"
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql2_data:/usr/local/pgsql/data
-      - pgbackrest_data:/usr/local/pgsql/backup
+      - postgresql2_data:/opt/containers/data
+      - pgbackrest_data:/opt/containers/backup
     networks:
       - postgres-cluster
     healthcheck:
@@ -142,8 +142,8 @@ services:
       PGBACKREST_ENABLE: "true"
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql3_data:/usr/local/pgsql/data
-      - pgbackrest_data:/usr/local/pgsql/backup
+      - postgresql3_data:/opt/containers/data
+      - pgbackrest_data:/opt/containers/backup
     networks:
       - postgres-cluster
     healthcheck:

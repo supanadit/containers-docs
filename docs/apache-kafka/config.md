@@ -42,7 +42,7 @@ title: Configuration
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `KAFKA_LOG_DIRS` | Log directories | `/opt/kafka/data` |
+| `KAFKA_LOG_DIRS` | Log directories | `/opt/containers/data` |
 | `KAFKA_LOG_RETENTION_HOURS` | Log retention period (hours) | `168` |
 | `KAFKA_LOG_SEGMENT_BYTES` | Log segment size | `1073741824` |
 | `KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS` | Retention check interval | `300000` |

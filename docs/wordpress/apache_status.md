@@ -58,7 +58,7 @@ wordpress:
     timeout: 30s
     retries: 5
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Server Status Fields

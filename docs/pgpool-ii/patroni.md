@@ -58,7 +58,7 @@ services:
       PATRONI_REPLICATION_PASSWORD: replicator_password
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql1_data:/usr/local/pgsql/data
+      - postgresql1_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s
@@ -88,7 +88,7 @@ services:
       PATRONI_REPLICATION_PASSWORD: replicator_password
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql2_data:/usr/local/pgsql/data
+      - postgresql2_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s
@@ -118,7 +118,7 @@ services:
       PATRONI_REPLICATION_PASSWORD: replicator_password
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
     volumes:
-      - postgresql3_data:/usr/local/pgsql/data
+      - postgresql3_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s

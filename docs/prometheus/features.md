@@ -118,6 +118,6 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - prometheus_data:/opt/prometheus/data
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/opt/containers/data
+      - ./config/prometheus.yml:/opt/containers/config/prometheus.yml
 ```

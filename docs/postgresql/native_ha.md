@@ -62,8 +62,8 @@ services:
       POSTGRESQL_LISTEN_ADDRESSES: "*"
       PGBACKREST_ENABLE: "true"
     volumes:
-      - postgresql_primary_data:/usr/local/pgsql/data
-      - pgbackrest_primary_data:/usr/local/pgsql/backup
+      - postgresql_primary_data:/opt/containers/data
+      - pgbackrest_primary_data:/opt/containers/backup
     networks:
       - postgres-cluster
     healthcheck:
@@ -93,7 +93,7 @@ services:
       EXTERNAL_ACCESS_METHOD: md5
       POSTGRESQL_LISTEN_ADDRESSES: "*"
     volumes:
-      - postgresql_replica1_data:/usr/local/pgsql/data
+      - postgresql_replica1_data:/opt/containers/data
     networks:
       - postgres-cluster
     healthcheck:
@@ -123,7 +123,7 @@ services:
       EXTERNAL_ACCESS_METHOD: md5
       POSTGRESQL_LISTEN_ADDRESSES: "*"
     volumes:
-      - postgresql_replica2_data:/usr/local/pgsql/data
+      - postgresql_replica2_data:/opt/containers/data
     networks:
       - postgres-cluster
     healthcheck:

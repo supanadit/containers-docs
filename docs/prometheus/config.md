@@ -12,8 +12,8 @@ title: Configuration
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `PROMETHEUS_PORT` | Web UI listen port | `9090` |
-| `PROMETHEUS_CONFIG_FILE` | Config file path | `/etc/prometheus/prometheus.yml` |
-| `PROMETHEUS_DATA_DIR` | TSDB data directory | `/opt/prometheus/data` |
+| `PROMETHEUS_CONFIG_FILE` | Config file path | `/opt/containers/config/prometheus.yml` |
+| `PROMETHEUS_DATA_DIR` | TSDB data directory | `/opt/containers/data` |
 | `PROMETHEUS_WEB_CONFIG_FILE` | TLS web config file | - |
 
 ### Storage Configuration
@@ -61,8 +61,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - prometheus_data:/opt/prometheus/data
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/opt/containers/data
+      - ./config/prometheus.yml:/opt/containers/config/prometheus.yml
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:9090/-/healthy || exit 1"]
       interval: 10s

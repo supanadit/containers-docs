@@ -30,5 +30,5 @@ wordpress:
     APACHE_STATUS: "true"  # Required for exporter
     APACHE_EXPORTER: "true"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

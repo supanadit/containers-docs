@@ -31,7 +31,7 @@ wordpress:
     // highlight-next-line
     APACHE_MPM: "worker" # Options: prefork, worker, event
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Custom MPM Prefork Configuration
@@ -58,7 +58,7 @@ wordpress:
     APACHE_MPM_PREFORK_MAX_REQUEST_WORKERS: "100"
     APACHE_MPM_PREFORK_MAX_REQUESTS_PER_CHILD: "5000"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Custom MPM Worker Configuration
@@ -86,7 +86,7 @@ wordpress:
     APACHE_MPM_WORKER_MAX_REQUEST_WORKERS: "100"
     APACHE_MPM_WORKER_MAX_CONNECTIONS_PER_CHILD: "9000"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Custom MPM Event Configuration
@@ -114,5 +114,5 @@ wordpress:
     APACHE_MPM_EVENT_MAX_REQUEST_WORKERS: "100"
     APACHE_MPM_EVENT_MAX_CONNECTIONS_PER_CHILD: "9000"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

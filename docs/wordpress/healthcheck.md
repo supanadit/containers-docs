@@ -21,7 +21,7 @@ wordpress:
     // highlight-next-line
     APACHE_STATUS: "true"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
   healthcheck:
     # Use server status to check if the server is running
     test: ["CMD", "curl", "-f", "http://localhost:80/server-status?auto"]

@@ -12,7 +12,7 @@ This feature only works when `IS_STATELESS=true`. See [Serverless](/docs/wordpre
 
 ## Usage
 
-Files are copied from `/content/stateless/` to `/var/www/html/wp-content/` at container startup.
+Files are copied from `/opt/containers/data/stateless/` to `/var/www/html/wp-content/` at container startup.
 
 ```yaml
 wordpress:
@@ -24,12 +24,12 @@ wordpress:
     STATELESS_FILE_OBJECT_CACHE: "object-cache.php"
     STATELESS_FILE_ADVANCED_CACHE: "advanced-cache.php"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 Given the example above, the container will:
 
-1. Check if `/content/stateless/object-cache.php` exists
+1. Check if `/opt/containers/data/stateless/object-cache.php` exists
 2. If found, copy it to `/var/www/html/wp-content/object-cache.php`
 3. Repeat for each `STATELESS_FILE_*` variable defined
 
@@ -40,7 +40,7 @@ STATELESS_FILE_<NAME>=<filename>
 ```
 
 - `<NAME>`: An identifier (uppercase, no spaces)
-- `<filename>`: The filename to copy from `/content/stateless/`
+- `<filename>`: The filename to copy from `/opt/containers/data/stateless/`
 
 ## Common Use Cases
 
@@ -60,7 +60,7 @@ wordpress:
     # Include Redis object cache
     STATELESS_FILE_OBJECT_CACHE: "object-cache.php"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 Your volume structure would be:
@@ -80,12 +80,12 @@ wordpress:
     STATELESS_FILE_OBJECT_CACHE: "object-cache.php"
     STATELESS_FILE_ADVANCED_CACHE: "advanced-cache.php"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## File Not Found Handling
 
-If a specified file does not exist in `/content/stateless/`, the startup script logs a warning and continues without error:
+If a specified file does not exist in `/opt/containers/data/stateless/`, the startup script logs a warning and continues without error:
 
 ```
 [INFO] Stateless file not found, skipping: object-cache.php
@@ -117,11 +117,11 @@ wordpress:
     IS_PROTECT_XMLRPC: "true"
     IS_PROTECT_WPCONFIG: "true"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Requirements
 
 - `IS_STATELESS` must be set to `"true"`
-- Files must exist in `/content/stateless/` directory
+- Files must exist in `/opt/containers/data/stateless/` directory
 - Files must be valid PHP files with proper ownership (www-data:www-data)

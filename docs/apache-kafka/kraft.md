@@ -25,7 +25,7 @@ services:
       KAFKA_LISTENERS: "PLAINTEXT://:9092,CONTROLLER://:9093"
       KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
     volumes:
-      - kafka_data:/opt/kafka/data
+      - kafka_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -61,7 +61,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - kafka_1_data:/opt/kafka/data
+      - kafka_1_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -87,7 +87,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - kafka_2_data:/opt/kafka/data
+      - kafka_2_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -113,7 +113,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - kafka_3_data:/opt/kafka/data
+      - kafka_3_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -146,7 +146,7 @@ services:
       KAFKA_NUM_NETWORK_THREADS: "1"
       KAFKA_NUM_IO_THREADS: "1"
     volumes:
-      - controller_1_data:/opt/kafka/data
+      - controller_1_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -167,7 +167,7 @@ services:
       KAFKA_NUM_NETWORK_THREADS: "1"
       KAFKA_NUM_IO_THREADS: "1"
     volumes:
-      - controller_2_data:/opt/kafka/data
+      - controller_2_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -188,7 +188,7 @@ services:
       KAFKA_NUM_NETWORK_THREADS: "1"
       KAFKA_NUM_IO_THREADS: "1"
     volumes:
-      - controller_3_data:/opt/kafka/data
+      - controller_3_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -218,7 +218,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - broker_1_data:/opt/kafka/data
+      - broker_1_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -248,7 +248,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - broker_2_data:/opt/kafka/data
+      - broker_2_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s
@@ -278,7 +278,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
     volumes:
-      - broker_3_data:/opt/kafka/data
+      - broker_3_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s

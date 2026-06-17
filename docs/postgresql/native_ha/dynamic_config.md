@@ -161,7 +161,7 @@ On error, the script:
 Before applying changes, the script backs up the current configuration:
 
 ```
-Backup location: /usr/local/pgsql/data/postgresql.conf.backup.YYYYMMDDHHMMSS
+Backup location: /opt/containers/data/postgresql.conf.backup.YYYYMMDDHHMMSS
 ```
 
 ## Workflows

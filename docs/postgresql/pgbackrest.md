@@ -19,8 +19,8 @@ services:
       // highlight-next-line
       PGBACKREST_ENABLE: "true"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
 ```
 
 ## Enable Automatic Backup
@@ -42,8 +42,8 @@ services:
       PGBACKREST_AUTO_TIMEZONE: "Asia/Jakarta" # Optional: Set your desired timezone
       // highlight-end
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
 ```
 
 ### Automatic Backup on Replicas
@@ -151,8 +151,8 @@ services:
       # PGBACKREST_AUTO_INCR_CRON: "*/15 * * * *"
       # PGBACKREST_AUTO_TIMEZONE: "Asia/Jakarta"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
 ```
 
 ### S3 Extended Options
@@ -212,8 +212,8 @@ services:
       # PGBACKREST_AUTO_INCR_CRON: "*/15 * * * *"
       # PGBACKREST_AUTO_TIMEZONE: "Asia/Jakarta"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
       - /home/<user>/.ssh/id_ed25519:/home/postgres/.ssh/id_ed25519:ro
       - /home/<user>/.ssh/id_ed25519.pub:/home/postgres/.ssh/id_ed25519.pub:ro
 ```
@@ -242,8 +242,8 @@ services:
       # PGBACKREST_REPO_GCS_CA_BUNDLE_FILE: "/path/to/ca-bundle.crt"
       # PGBACKREST_REPO_GCS_CA_BUNDLE_PATH: "/path/to/ca-bundle/"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
 ```
 
 ### GCS Configuration Options
@@ -328,11 +328,11 @@ services:
     environment:
       POSTGRES_PASSWORD: secret
       PGBACKREST_ENABLE: "true"
-      PGBACKREST_PRIMARY_PATH: /usr/local/pgsql/data
+      PGBACKREST_PRIMARY_PATH: /opt/containers/data
       PGBACKREST_BACKUP_STANDBY: "prefer"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
       - postgresql_ssh:/home/postgres/.ssh  # Shared SSH volume
 
   postgresql-replica:
@@ -343,12 +343,12 @@ services:
       REPLICATION_ROLE: replica
       PRIMARY_HOST: postgresql-primary
       PGBACKREST_ENABLE: "true"
-      PGBACKREST_PRIMARY_PATH: /usr/local/pgsql/data
+      PGBACKREST_PRIMARY_PATH: /opt/containers/data
       PGBACKREST_PRIMARY_HOST: postgresql-primary
       PGBACKREST_BACKUP_STANDBY: "y"
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
       - postgresql_ssh:/home/postgres/.ssh  # Mount same SSH volume
 
 volumes:
@@ -456,8 +456,8 @@ services:
       PGBACKREST_RESTORE_SET: "latest"      # Select specific backup set
       # PGBACKREST_RESTORE_TABLESPACE_MAP: "old_dir=/new_dir,ts2=/mnt/ts"  # Remap tablespaces
     volumes:
-      - ./.data:/usr/local/pgsql/data
-      - ./.backup:/usr/local/pgsql/backup
+      - ./.data:/opt/containers/data
+      - ./.backup:/opt/containers/backup
 ```
 
 ### PITR Configuration Options
@@ -555,8 +555,8 @@ services:
       PGBACKREST_AUTO_FULL_CRON: "00 02 * * *"
       PATRONI_PGBACKREST_CALLBACKS: "true"  # Default, but explicit
     volumes:
-      - postgresql_data:/usr/local/pgsql/data
-      - pgbackrest_backup:/usr/local/pgsql/backup
+      - postgresql_data:/opt/containers/data
+      - pgbackrest_backup:/opt/containers/backup
 ```
 
 ### Limitations

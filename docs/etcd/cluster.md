@@ -24,7 +24,7 @@ services:
       - "2379:2379"
       - "2380:2380"
     volumes:
-      - etcd_data:/var/lib/etcd
+      - etcd_data:/opt/containers/data
     healthcheck:
       test: ["CMD", "etcdctl", "--endpoints=127.0.0.1:2379", "endpoint", "health"]
       interval: 5s
@@ -54,7 +54,7 @@ services:
       - "2379:2379"
       - "2380:2380"
     volumes:
-      - etcd_1_data:/var/lib/etcd
+      - etcd_1_data:/opt/containers/data
     healthcheck:
       test: ["CMD", "etcdctl", "--endpoints=127.0.0.1:2379", "endpoint", "health"]
       interval: 5s
@@ -73,7 +73,7 @@ services:
     ports:
       - "2380:2380"
     volumes:
-      - etcd_2_data:/var/lib/etcd
+      - etcd_2_data:/opt/containers/data
     healthcheck:
       test: ["CMD", "etcdctl", "--endpoints=127.0.0.1:2379", "endpoint", "health"]
       interval: 5s
@@ -92,7 +92,7 @@ services:
     ports:
       - "2381:2380"
     volumes:
-      - etcd_3_data:/var/lib/etcd
+      - etcd_3_data:/opt/containers/data
     healthcheck:
       test: ["CMD", "etcdctl", "--endpoints=127.0.0.1:2379", "endpoint", "health"]
       interval: 5s
@@ -143,7 +143,7 @@ ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd-1:2380
 
 ### Data Directory
 
-The data directory (`/var/lib/etcd`) stores ETCD's WAL and snapshot files. Ensure:
+The data directory (`/opt/containers/data`) stores ETCD's WAL and snapshot files. Ensure:
 - Adequate disk space
 - Proper permissions (700)
 - Regular backups

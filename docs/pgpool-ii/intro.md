@@ -23,7 +23,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres1_data:/usr/local/pgsql/data
+      - postgres1_data:/opt/containers/data
     networks:
       - pgpool_network
     healthcheck:
@@ -50,7 +50,7 @@ services:
       postgres-1:
         condition: service_healthy
     volumes:
-      - postgres2_data:/usr/local/pgsql/data
+      - postgres2_data:/opt/containers/data
     networks:
       - pgpool_network
     healthcheck:
@@ -77,7 +77,7 @@ services:
       postgres-1:
         condition: service_healthy
     volumes:
-      - postgres3_data:/usr/local/pgsql/data
+      - postgres3_data:/opt/containers/data
     networks:
       - pgpool_network
     healthcheck:

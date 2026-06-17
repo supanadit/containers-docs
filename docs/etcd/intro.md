@@ -36,7 +36,7 @@ services:
       - "2379:2379"
       - "2380:2380"
     volumes:
-      - etcd_data:/var/lib/etcd
+      - etcd_data:/opt/containers/data
     healthcheck:
       test: ["CMD", "etcdctl", "--endpoints=127.0.0.1:2379", "endpoint", "health"]
       interval: 5s
@@ -91,7 +91,7 @@ docker compose exec etcd etcdctl endpoint status
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `ETCD_NAME` | Node name | `etcd-node` |
-| `ETCD_DATA_DIR` | Data directory | `/var/lib/etcd` |
+| `ETCD_DATA_DIR` | Data directory | `/opt/containers/data` |
 | `ETCD_LISTEN_PEER_URLS` | Peer listening URLs | `http://0.0.0.0:2380` |
 | `ETCD_LISTEN_CLIENT_URLS` | Client listening URLs | `http://0.0.0.0:2379` |
 | `ETCD_ADVERTISE_CLIENT_URLS` | Advertised client URLs | Auto-detected from container IP |

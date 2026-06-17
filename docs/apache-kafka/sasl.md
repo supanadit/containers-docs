@@ -33,7 +33,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
       KAFKA_DELETE_TOPIC_ENABLE: "true"
     volumes:
-      - kafka_sasl_data:/opt/kafka/data
+      - kafka_sasl_data:/opt/containers/data
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f kafka.Kafka || exit 1"]
       interval: 10s

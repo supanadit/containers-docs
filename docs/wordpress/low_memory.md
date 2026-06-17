@@ -98,7 +98,7 @@ wordpress:
     PHP_OPCACHE_MEMORY: 32
     PHP_OPCACHE_MAX_ACCELERATED_FILES: 200
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ### 128MB RAM Target (OPcache Disabled)
@@ -130,7 +130,7 @@ wordpress:
     # 64M is the minimum viable PHP memory for WordPress
     PHP_MEMORY_LIMIT: 64M
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ### 64MB RAM Target (Absolute Minimum, Not Recommended)
@@ -158,7 +158,7 @@ wordpress:
     PHP_OPCACHE_ENABLE: "false"
     PHP_MEMORY_LIMIT: 64M
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```
 
 ## Troubleshooting

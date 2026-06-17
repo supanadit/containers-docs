@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_PASSWORD: secret
     volumes:
-      - ./.data:/usr/local/pgsql/data
+      - ./.data:/opt/containers/data
 ```
 
 

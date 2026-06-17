@@ -27,5 +27,5 @@ wordpress:
         'debug' => false,
       ]
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

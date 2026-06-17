@@ -46,8 +46,8 @@ services:
       PROMETHEUS_STORAGE_TSDB_MIN_BLOCK_DURATION: "2h"
       PROMETHEUS_STORAGE_TSDB_MAX_BLOCK_DURATION: "2h"
     volumes:
-      - prometheus_data:/opt/prometheus/data
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/opt/containers/data
+      - ./config/prometheus.yml:/opt/containers/config/prometheus.yml
 
   thanos-sidecar:
     image: ghcr.io/supanadit/containers/thanos:0.40.1-r4
@@ -60,7 +60,7 @@ services:
       THANOS_S3_SECRET_KEY: "password"
       THANOS_S3_INSECURE: "true"
     volumes:
-      - prometheus_data:/opt/thanos/data
+      - prometheus_data:/opt/containers/data
 
   thanos-query:
     image: ghcr.io/supanadit/containers/thanos:0.40.1-r4
@@ -102,11 +102,11 @@ Mount Prometheus data directory to both containers:
 ```yaml
 # Prometheus
 volumes:
-  - prometheus_data:/opt/prometheus/data
+  - prometheus_data:/opt/containers/data
 
 # Thanos sidecar
 volumes:
-  - prometheus_data:/opt/thanos/data
+  - prometheus_data:/opt/containers/data
 ```
 
 ## Next Steps

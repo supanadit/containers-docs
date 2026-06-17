@@ -25,5 +25,5 @@ wordpress:
     WORDPRESS_DB_NAME: wordpress
     WORDPRESS_FS_METHOD: "direct"
   volumes:
-    - ./.data/wordpress:/content
+    - ./.data/wordpress:/opt/containers/data
 ```

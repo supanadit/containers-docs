@@ -24,7 +24,7 @@ services:
       ETCD_PEER_CLIENT_CERT_AUTH: "true"
       ETCD_PEER_TRUSTED_CA_FILE: /tls/ca.pem
     volumes:
-      - etcd_1_data:/var/lib/etcd
+      - etcd_1_data:/opt/containers/data
       - ./tls/ca.pem:/tls/ca.pem:ro
       - ./tls/server.pem:/tls/server.pem:ro
       - ./tls/server-key.pem:/tls/server-key.pem:ro
@@ -49,7 +49,7 @@ services:
       ETCD_PEER_CLIENT_CERT_AUTH: "true"
       ETCD_PEER_TRUSTED_CA_FILE: /tls/ca.pem
     volumes:
-      - etcd_2_data:/var/lib/etcd
+      - etcd_2_data:/opt/containers/data
       - ./tls/ca.pem:/tls/ca.pem:ro
       - ./tls/server.pem:/tls/server.pem:ro
       - ./tls/server-key.pem:/tls/server-key.pem:ro
@@ -74,7 +74,7 @@ services:
       ETCD_PEER_CLIENT_CERT_AUTH: "true"
       ETCD_PEER_TRUSTED_CA_FILE: /tls/ca.pem
     volumes:
-      - etcd_3_data:/var/lib/etcd
+      - etcd_3_data:/opt/containers/data
       - ./tls/ca.pem:/tls/ca.pem:ro
       - ./tls/server.pem:/tls/server.pem:ro
       - ./tls/server-key.pem:/tls/server-key.pem:ro

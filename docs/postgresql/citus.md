@@ -34,8 +34,8 @@ services:
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
       PGBACKREST_ENABLE: "true"
     volumes:
-      - postgresql_coordinator_data:/usr/local/pgsql/data
-      - postgresql_coordinator_backup:/usr/local/pgsql/backup
+      - postgresql_coordinator_data:/opt/containers/data
+      - postgresql_coordinator_backup:/opt/containers/backup
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s
@@ -61,8 +61,8 @@ services:
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
       PGBACKREST_ENABLE: "true"
     volumes:
-      - postgresql_worker1_data:/usr/local/pgsql/data
-      - postgresql_worker1_backup:/usr/local/pgsql/backup
+      - postgresql_worker1_data:/opt/containers/data
+      - postgresql_worker1_backup:/opt/containers/backup
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s
@@ -88,8 +88,8 @@ services:
       PG_HBA_ADD_1: "host all all 172.18.0.0/16 trust"
       PGBACKREST_ENABLE: "true"
     volumes:
-      - postgresql_worker2_data:/usr/local/pgsql/data
-      - postgresql_worker2_backup:/usr/local/pgsql/backup
+      - postgresql_worker2_data:/opt/containers/data
+      - postgresql_worker2_backup:/opt/containers/backup
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -p 5432 -U postgres"]
       interval: 30s

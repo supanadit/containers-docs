@@ -75,7 +75,7 @@ services:
       - "5432:5432"
       - "8008:8008"
     volumes:
-      - postgresql_c_1:/usr/local/pgsql/data
+      - postgresql_c_1:/opt/containers/data
       - pgbackrest_backup:/var/lib/pgbackrest
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
@@ -118,7 +118,7 @@ services:
       - "5434:5432"
       - "8009:8008"
     volumes:
-      - postgresql_w_1_1:/usr/local/pgsql/data
+      - postgresql_w_1_1:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
@@ -160,7 +160,7 @@ services:
       - "5433:5432"
       - "8010:8008"
     volumes:
-      - postgresql_w_1_2:/usr/local/pgsql/data
+      - postgresql_w_1_2:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
@@ -203,7 +203,7 @@ services:
       - "5435:5432"
       - "8011:8008"
     volumes:
-      - postgresql_c_2:/usr/local/pgsql/data
+      - postgresql_c_2:/opt/containers/data
       - pgbackrest_backup:/var/lib/pgbackrest
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
@@ -246,7 +246,7 @@ services:
       - "5436:5432"
       - "8012:8008"
     volumes:
-      - postgresql_w_2_1:/usr/local/pgsql/data
+      - postgresql_w_2_1:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
@@ -288,7 +288,7 @@ services:
       - "5437:5432"
       - "8013:8008"
     volumes:
-      - postgresql_w_2_2:/usr/local/pgsql/data
+      - postgresql_w_2_2:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
@@ -331,7 +331,7 @@ services:
       - "5438:5432"
       - "8014:8008"
     volumes:
-      - postgresql_c_3:/usr/local/pgsql/data
+      - postgresql_c_3:/opt/containers/data
       - pgbackrest_backup:/var/lib/pgbackrest
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
@@ -374,7 +374,7 @@ services:
       - "5439:5432"
       - "8015:8008"
     volumes:
-      - postgresql_w_1_3:/usr/local/pgsql/data
+      - postgresql_w_1_3:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
@@ -416,7 +416,7 @@ services:
       - "5440:5432"
       - "8016:8008"
     volumes:
-      - postgresql_w_2_3:/usr/local/pgsql/data
+      - postgresql_w_2_3:/opt/containers/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s

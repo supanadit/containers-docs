@@ -51,7 +51,7 @@ ERROR: authentication failed for user "postgres"
 
 2. **Verify pg_hba.conf on backends allows PgPool-II:**
    ```bash
-   docker exec postgres-1 cat /usr/local/pgsql/data/pg_hba.conf | grep -v "^#" | grep -v "^$"
+   docker exec postgres-1 cat /opt/containers/data/pg_hba.conf | grep -v "^#" | grep -v "^$"
    ```
 
 3. **If using md5 authentication, ensure password is correct:**
