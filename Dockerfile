@@ -21,6 +21,7 @@ RUN printf '%s\n' \
     '    <Directory /var/www/html/public>' \
     '        AllowOverride All' \
     '        Require all granted' \
+    '        FallbackResource /index.php' \
     '    </Directory>' \
     '    ErrorLog ${APACHE_LOG_DIR}/error.log' \
     '    CustomLog ${APACHE_LOG_DIR}/access.log combined' \
