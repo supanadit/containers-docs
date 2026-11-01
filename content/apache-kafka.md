@@ -103,7 +103,7 @@ curl -s http://localhost:8080/health
 > [!NOTE]
 > If `KAFKA_CONTROLLER_QUORUM_VOTERS` points at other nodes, they must all be
 > reachable before the quorum elects a leader — health stays degraded until
-> then. See [Health & readiness](/docs/health) for the endpoint contract.
+> then. See [Health & readiness](/health) for the endpoint contract.
 
 ## KRaft bootstrap
 
@@ -165,7 +165,7 @@ and `KAFKA_METADATA_BACKUP_RETENTION_DAYS` (default `7`).
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become config files.
-- [Volumes](/docs/volumes) — the `/opt/containers/*` layout.
-- [Apache ZooKeeper](/docs/apache-zookeeper) — only needed for legacy,
+- [Configuration](/configuration) — how env vars become config files.
+- [Volumes](/volumes) — the `/opt/containers/*` layout.
+- [Apache ZooKeeper](/apache-zookeeper) — only needed for legacy,
   non-KRaft clients.

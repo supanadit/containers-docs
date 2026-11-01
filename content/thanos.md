@@ -29,7 +29,7 @@ docker run -d \
 | ----------------- | --------------------------------------------------------- |
 | `query`           | PromQL federation across sidecars/stores/receivers.        |
 | `query-frontend`  | Caching, splitting front end in front of query.            |
-| `sidecar`         | Sits next to [Prometheus](/docs/prometheus), ships blocks. |
+| `sidecar`         | Sits next to [Prometheus](/prometheus), ships blocks. |
 | `store`           | Serves object-storage blocks as a store API.               |
 | `receive`         | Accepts Prometheus remote write.                           |
 | `rule`            | Runs recording and alerting rules.                         |
@@ -155,6 +155,6 @@ curl -s http://localhost:8080/health
 
 ## Next steps
 
-- [Prometheus](/docs/prometheus) — the scraper the sidecar partners with.
-- [Mimir](/docs/mimir) — the push-based alternative for long-term storage.
-- [Grafana](/docs/grafana) — query Thanos as a Prometheus datasource.
+- [Prometheus](/prometheus) — the scraper the sidecar partners with.
+- [Mimir](/mimir) — the push-based alternative for long-term storage.
+- [Grafana](/grafana) — query Thanos as a Prometheus datasource.

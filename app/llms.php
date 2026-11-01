@@ -22,6 +22,6 @@ foreach ($C['nav'] as $group) {
                 }
             }
         }
-        echo "- [{$p['title']}]({$S['baseUrl']}/docs/{$p['slug']}." . "md): " . $desc . "\n";
+        echo "- [{$p['title']}]({$S['baseUrl']}/{$p['slug']}.md): " . $desc . "\n";
     }
 }

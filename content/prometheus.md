@@ -107,6 +107,6 @@ curl -s http://localhost:8080/health/comprehensive | jq
 
 ## Next steps
 
-- Ship metrics long-term with [Mimir](/docs/mimir) or [Thanos](/docs/thanos).
-- Visualize them with [Grafana](/docs/grafana).
-- [Configuration](/docs/configuration) explains the env-var conventions.
+- Ship metrics long-term with [Mimir](/mimir) or [Thanos](/thanos).
+- Visualize them with [Grafana](/grafana).
+- [Configuration](/configuration) explains the env-var conventions.

@@ -41,8 +41,8 @@ jobs:
         run: |
           (cd public && php -S 127.0.0.1:8099 index.php &) 
           sleep 2
-          for route in /docs /docs/why /docs/postgresql /search-index.json \
-                       /llms.txt /llms-full.txt /sitemap.xml /docs/why.md; do
+          for route in /why /postgresql /pgpool-ii/llms.txt /pgpool-ii/llms-full.txt /search-index.json \
+                       /llms.txt /llms-full.txt /sitemap.xml /why.md; do
             code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:8099$route")
             if [ "$code" != "200" ]; then
               echo "Route $route returned $code" >&2
@@ -50,9 +50,9 @@ jobs:
             fi
             echo "OK $route -> 200"
           done
-          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8099/docs/nope)
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8099/nope)
           if [ "$code" != "404" ]; then
             echo "Unknown slug returned $code, expected 404" >&2
             exit 1
           fi
-          echo "OK /docs/nope -> 404"
+          echo "OK /nope -> 404"

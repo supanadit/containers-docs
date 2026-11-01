@@ -71,8 +71,8 @@ volumes:
 ```
 
 > [!TIP]
-> Point a datasource at [Prometheus](/docs/prometheus),
-> [Loki](/docs/loki) or [Mimir](/docs/mimir) running beside it on the same
+> Point a datasource at [Prometheus](/prometheus),
+> [Loki](/loki) or [Mimir](/mimir) running beside it on the same
 > compose network — e.g. `http://prometheus:9090` — and Grafana picks it up on
 > boot, no UI clicking required.
 
@@ -96,6 +96,6 @@ curl -s http://localhost:8080/grafana/health
 
 ## Next steps
 
-- [Configuration](/docs/configuration) explains the env-var conventions.
-- Collect logs with [Loki](/docs/loki) and metrics with
-  [Prometheus](/docs/prometheus).
+- [Configuration](/configuration) explains the env-var conventions.
+- Collect logs with [Loki](/loki) and metrics with
+  [Prometheus](/prometheus).

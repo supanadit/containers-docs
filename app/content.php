@@ -9,7 +9,7 @@ return [
         'description' => 'Documentation for the containers collection: production-ready Docker images built with forge, supervised by ezx, and configured entirely through environment variables.',
         'baseUrl'     => 'https://docs.container.supanadit.com',
         'landingUrl'  => 'https://containers.supanadit.com',
-        'repoUrl'     => 'https://github.com/supanadit/containers',
+        'repoUrl'     => 'https://github.com/supanadit/containers-docs',
         'registry'    => 'ghcr.io/supanadit/containers',
         'author'      => 'Supan Adit Pratama',
         'copyright'   => "\xC2\xA9 2026 Supan Adit Pratama",

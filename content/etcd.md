@@ -75,7 +75,7 @@ curl -s http://localhost:8080/health
 > [!TIP]
 > Inside the cluster you can also use the native endpoint:
 > `curl http://localhost:2379/health`. Orchestrators should probe the
-> composite endpoint — see [Health & readiness](/docs/health).
+> composite endpoint — see [Health & readiness](/health).
 
 ## Clustering
 
@@ -112,7 +112,7 @@ services:
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become flags.
-- [Volumes](/docs/volumes) — the `/opt/containers/*` layout.
-- [Apache Kafka](/docs/apache-kafka) — KRaft replaces ZooKeeper for Kafka
+- [Configuration](/configuration) — how env vars become flags.
+- [Volumes](/volumes) — the `/opt/containers/*` layout.
+- [Apache Kafka](/apache-kafka) — KRaft replaces ZooKeeper for Kafka
   metadata; etcd is not part of the Kafka stack.

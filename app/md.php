@@ -1,5 +1,5 @@
 <?php
-// /docs/<slug>.md — raw markdown of a page, with llms-friendly frontmatter.
+// /<slug>.md — raw markdown of a page, with llms-friendly frontmatter.
 require_once APP_ROOT . '/markdown.php';
 
 header('Content-Type: text/markdown; charset=utf-8');
@@ -16,6 +16,6 @@ if ($page === null || !is_file($path)) {
 
 $S = $C['site'];
 echo "---\ntitle: {$page['title']}\ngroup: {$page['group']}\n";
-echo "url: {$S['baseUrl']}/docs/{$slug}\n\n";
+echo "url: {$S['baseUrl']}/{$slug}\n\n";
 echo "---\n\n";
 echo file_get_contents($path);

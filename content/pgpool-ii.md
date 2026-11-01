@@ -1,6 +1,6 @@
 # PgPool-II
 
-PgPool-II 4.6 in front of your [PostgreSQL](/docs/postgresql) fleet:
+PgPool-II 4.6 in front of your [PostgreSQL](/postgresql) fleet:
 connection pooling, read/write load balancing, streaming-replication
 awareness and watchdog-based HA for the pool itself. The entrypoint
 generates `pgpool.conf` and `pool_hba.conf` from environment variables and
@@ -111,6 +111,6 @@ curl -s http://127.0.0.1:8080/health/comprehensive
 
 > [!TIP]
 > Point PgPool at a replicated fleet from the
-> [PostgreSQL](/docs/postgresql) image (`HA_MODE` + `REPLICATION_ROLE`) and
+> [PostgreSQL](/postgresql) image (`HA_MODE` + `REPLICATION_ROLE`) and
 > set `PGPOOL_BACKEND_FLAGS` to pin the primary — see
-> [Configuration](/docs/configuration) for the general env-var model.
+> [Configuration](/configuration) for the general env-var model.

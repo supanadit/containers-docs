@@ -9,7 +9,7 @@ image content; your `wp-content` lives on the data volume.
 ## Quickstart
 
 WordPress needs a database. Pair it with
-[MariaDB](/docs/mariadb) or the upstream `mariadb` image:
+[MariaDB](/mariadb) or the upstream `mariadb` image:
 
 ```yaml
 services:
@@ -96,7 +96,7 @@ curl -s http://localhost:80/            # the site
 docker exec wordpress curl -s http://127.0.0.1:8080/health/comprehensive
 ```
 
-See [Health & readiness](/docs/health) for the composite endpoint contract.
+See [Health & readiness](/health) for the composite endpoint contract.
 
 ## Stateless mode
 
@@ -143,12 +143,12 @@ overrides the compressed MIME-type list.
 
 Set `APACHE_STATUS=true` for `mod_status` (server-status on the Apache port)
 and `APACHE_EXPORTER=true` to run apache_exporter on port 9117 for scraping by
-[Prometheus](/docs/prometheus). Keep `mod_status` internal unless you also set
+[Prometheus](/prometheus). Keep `mod_status` internal unless you also set
 `APACHE_STATUS_PUBLIC=true`.
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become `wp-config.php`,
+- [Configuration](/configuration) — how env vars become `wp-config.php`,
   `php.ini` and `httpd.conf`.
-- [Volumes](/docs/volumes) — the `/opt/containers/*` layout.
-- [MariaDB](/docs/mariadb) — the database this image pairs with.
+- [Volumes](/volumes) — the `/opt/containers/*` layout.
+- [MariaDB](/mariadb) — the database this image pairs with.

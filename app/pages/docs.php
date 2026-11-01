@@ -4,8 +4,8 @@
 
 $S = $C['site'];
 $slug = $page['slug'];
-$canonical = $S['baseUrl'] . '/docs/' . $slug;
-$editUrl = $S['repoUrl'] . '/blob/main/container-docs/content/' . $slug . '.md';
+$canonical = $S['baseUrl'] . '/' . $slug;
+$editUrl = $S['repoUrl'] . '/blob/main/content/' . $slug . '.md';
 
 function docs_sidebar(array $C, string $activeSlug): void
 {
@@ -13,7 +13,7 @@ function docs_sidebar(array $C, string $activeSlug): void
         echo '<div class="nav-group"><p class="nav-group-title">' . htmlspecialchars($group['title']) . '</p><ul>';
         foreach ($group['pages'] as $p) {
             $active = $p['slug'] === $activeSlug ? ' class="active" aria-current="page"' : '';
-            echo '<li><a href="/docs/' . $p['slug'] . '"' . $active . '>' . htmlspecialchars($p['title']) . '</a></li>';
+            echo '<li><a href="/' . $p['slug'] . '"' . $active . '>' . htmlspecialchars($p['title']) . '</a></li>';
         }
         echo '</ul></div>';
     }
@@ -64,10 +64,10 @@ require APP_ROOT . '/seo.php';
             <a class="edit-link" href="<?= htmlspecialchars($editUrl) ?>" target="_blank" rel="noopener noreferrer">Edit this page on GitHub →</a>
             <nav class="pager">
                 <?php if ($prev !== null): ?>
-                <a class="pager-prev" href="/docs/<?= $prev['slug'] ?>"><span>← Previous</span><strong><?= htmlspecialchars($prev['title']) ?></strong></a>
+                <a class="pager-prev" href="/<?= $prev['slug'] ?>"><span>← Previous</span><strong><?= htmlspecialchars($prev['title']) ?></strong></a>
                 <?php else: ?><span></span><?php endif; ?>
                 <?php if ($next !== null): ?>
-                <a class="pager-next" href="/docs/<?= $next['slug'] ?>"><span>Next →</span><strong><?= htmlspecialchars($next['title']) ?></strong></a>
+                <a class="pager-next" href="/<?= $next['slug'] ?>"><span>Next →</span><strong><?= htmlspecialchars($next['title']) ?></strong></a>
                 <?php else: ?><span></span><?php endif; ?>
             </nav>
             <p class="copyright"><?= htmlspecialchars($S['copyright']) ?> · MIT License</p>

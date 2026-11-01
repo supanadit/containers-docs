@@ -29,7 +29,7 @@ its own protocol. Common causes:
 Volumes are chowned best-effort. A `:ro` or foreign-owner bind mount logs a
 warning instead of aborting the container, but the app inside may not be able
 to write. Fix the mount owner, or mount at a path the entrypoint does not
-recurse into. See [Volumes & backups](/docs/volumes).
+recurse into. See [Volumes & backups](/volumes).
 
 ## Checking what the entrypoint decided
 

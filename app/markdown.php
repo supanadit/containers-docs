@@ -230,7 +230,7 @@ function md_inline(string $text): string
         $escaped
     );
 
-    // Links: [text](href) — internal /docs/... links stay relative, others open in a new tab.
+    // Links: [text](href) — internal /slug links stay relative, others open in a new tab.
     $escaped = preg_replace_callback(
         '/\[([^\]]+)\]\(([^)\s]+)\)/',
         function ($m) {

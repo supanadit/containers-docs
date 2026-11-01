@@ -54,4 +54,4 @@ For values that are not exposed as variables, most containers read optional
 drop-in configuration from `/opt/containers/config`. Mount a file there and
 the entrypoint merges or references it instead of failing. Per-container
 pages show the exact mechanism — for example
-[PostgreSQL custom config](/docs/postgresql#custom-configuration).
+[PostgreSQL custom config](/postgresql#custom-configuration).

@@ -51,7 +51,7 @@ as soon as ZooKeeper accepts client connections. The ezx API listens on port
 curl -s http://localhost:8080/health
 ```
 
-See [Health & readiness](/docs/health) for the full endpoint contract.
+See [Health & readiness](/health) for the full endpoint contract.
 
 ## Ensemble (clustering)
 
@@ -77,6 +77,6 @@ services:
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become config files.
-- [Volumes](/docs/volumes) — the `/opt/containers/*` layout.
-- [Apache Kafka](/docs/apache-kafka) — runs KRaft, no ZooKeeper required.
+- [Configuration](/configuration) — how env vars become config files.
+- [Volumes](/volumes) — the `/opt/containers/*` layout.
+- [Apache Kafka](/apache-kafka) — runs KRaft, no ZooKeeper required.

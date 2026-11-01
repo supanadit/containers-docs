@@ -5,7 +5,7 @@ metrics. Mimir's full YAML is notoriously long; this image collapses it to a
 few `MIMIR_*` / `GRAFANA_MIMIR_*` environment variables, renders `mimir.yaml`
 at boot, and supervises the server with
 [ezx](https://github.com/supanadit/ezx). Point
-[Prometheus](/docs/prometheus) remote-write at it and you have durable
+[Prometheus](/prometheus) remote-write at it and you have durable
 metrics with a PromQL API.
 
 ## Quickstart
@@ -88,7 +88,7 @@ remote_write:
 ```
 
 > [!TIP]
-> Query Mimir from [Grafana](/docs/grafana) as a Prometheus datasource at
+> Query Mimir from [Grafana](/grafana) as a Prometheus datasource at
 > `http://mimir:8080/prometheus` — Mimir speaks PromQL, so no extra setup.
 
 ## Health
@@ -108,5 +108,5 @@ to the same server.)
 
 ## Next steps
 
-- [Prometheus](/docs/prometheus) scrapes and pushes into Mimir.
-- Prefer Thanos' object-storage approach? See [Thanos](/docs/thanos).
+- [Prometheus](/prometheus) scrapes and pushes into Mimir.
+- Prefer Thanos' object-storage approach? See [Thanos](/thanos).

@@ -16,7 +16,7 @@ foreach (docs_pages($C) as $p) {
         'slug'     => $p['slug'],
         'title'    => $p['title'],
         'group'    => $p['group'],
-        'url'      => '/docs/' . $p['slug'],
+        'url'      => '/' . $p['slug'],
         'headings' => array_map(fn($h) => ['text' => $h['text'], 'id' => $h['id']], $rendered['headings']),
         'body'     => mb_substr(md_plain($src), 0, 8000),
     ];

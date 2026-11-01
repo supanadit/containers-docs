@@ -35,7 +35,7 @@ curl -s http://localhost:5432/health
 
 > [!TIP]
 > Every container exposes a composite health endpoint. Orchestrators should
-> probe it instead of a raw TCP handshake — see [Health & readiness](/docs/health).
+> probe it instead of a raw TCP handshake — see [Health & readiness](/health).
 
 ## Run with Compose
 
@@ -72,5 +72,5 @@ pre-created and owned by the application's dedicated user.
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become config files.
+- [Configuration](/configuration) — how env vars become config files.
 - Pick a container from the sidebar for its specific variables and examples.

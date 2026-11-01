@@ -58,7 +58,7 @@ port, and the ezx API serves it on port 8080:
 curl -s http://localhost:8080/health
 ```
 
-See [Health & readiness](/docs/health) for the endpoint contract.
+See [Health & readiness](/health) for the endpoint contract.
 
 ## TLS
 
@@ -109,5 +109,5 @@ all nodes redirect to the same console.
 
 ## Next steps
 
-- [Configuration](/docs/configuration) — how env vars become arguments.
-- [Volumes](/docs/volumes) — the `/opt/containers/*` layout.
+- [Configuration](/configuration) — how env vars become arguments.
+- [Volumes](/volumes) — the `/opt/containers/*` layout.

@@ -41,7 +41,7 @@ volumes:
 
 Data lives in `/opt/containers/data` (this is `PGDATA`), generated config in
 `/opt/containers/config`, and pgBackRest output in `/opt/containers/backup` —
-see [Volumes](/docs/volumes).
+see [Volumes](/volumes).
 
 ## Configuration
 
@@ -121,5 +121,5 @@ CREATE EXTENSION pg_cron;
 > [!TIP]
 > For a full HA stack, pair this image with Patroni (`PATRONI_ENABLE=true`)
 > and take backups with pgBackRest — see
-> [Configuration](/docs/configuration) for how the env vars become
+> [Configuration](/configuration) for how the env vars become
 > `postgresql.conf` and `pgbackrest.conf`.

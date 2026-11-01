@@ -32,8 +32,10 @@ public/
   main.js          # theme toggle, TOC scroll-spy, code copy, search
 ```
 
-Routes: `/docs`, `/docs/<slug>`, `/docs/<slug>.md`, `/search-index.json`,
-`/llms.txt`, `/llms-full.txt`, `/sitemap.xml`. `/` redirects to `/docs`.
+Routes: `/<slug>`, `/<slug>.md`, `/<slug>/llms.txt` (plain text),
+`/<slug>/llms-full.txt` (raw markdown), `/search-index.json`, `/llms.txt`,
+`/llms-full.txt`, `/sitemap.xml`. `/` redirects to the root page (`/why`).
+Legacy `/docs/<slug>` URLs 301-redirect to `/<slug>`.
 
 - **Nav & pages** are defined in `app/content.php`; each entry maps to
   `content/<slug>.md`, parsed at request time.

@@ -9,7 +9,8 @@ $S = $C['site'];
 
 echo "# {$S['name']}\n\n";
 echo "> {$S['description']}\n\n";
-echo "Per-page markdown is also available at /docs/<slug>.md and an index at /llms.txt.\n\n";
+echo "Per-page markdown is available at /<slug>.md and an index at /llms.txt.\n";
+echo "Each page also exposes /<slug>/llms.txt (plain text) and /<slug>/llms-full.txt (raw markdown).\n\n";
 
 foreach (docs_pages($C) as $p) {
     $path = docs_path($C, $p['slug']);
@@ -19,7 +20,7 @@ foreach (docs_pages($C) as $p) {
     echo "---\n";
     echo "title: {$p['title']}\n";
     echo "group: {$p['group']}\n";
-    echo "url: {$S['baseUrl']}/docs/{$p['slug']}.md\n";
+    echo "url: {$S['baseUrl']}/{$p['slug']}.md\n";
     echo "---\n\n";
     echo file_get_contents($path);
     echo "\n\n";

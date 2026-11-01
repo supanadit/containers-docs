@@ -39,7 +39,7 @@ environment:
   PGBACKREST_ENABLED: "true"
 ```
 
-Per-container pages (see [PostgreSQL](/docs/postgresql#backups)) list the
+Per-container pages (see [PostgreSQL](/postgresql#backups)) list the
 exact variables: schedule, retention, and repository configuration.
 
 ## Restoring

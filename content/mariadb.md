@@ -106,10 +106,10 @@ curl -s http://127.0.0.1:8080/health/comprehensive
 
 When both `MAXSCALE_SERVICE_USER` and `MAXSCALE_SERVICE_PASSWORD` are set,
 the entrypoint creates that account with the grants MaxScale's monitor
-needs — ready for [MaxScale](/docs/maxscale) to proxy this server.
+needs — ready for [MaxScale](/maxscale) to proxy this server.
 
 > [!TIP]
 > Put MaxScale in front of a Galera cluster for read/write splitting: set
 > the same `MAXSCALE_SERVICE_USER`/`PASSWORD` on every MariaDB node, then
 > point MaxScale's monitor at the node list — see
-> [Configuration](/docs/configuration) for the general env-var model.
+> [Configuration](/configuration) for the general env-var model.

@@ -1,7 +1,7 @@
 # MaxScale
 
 MariaDB MaxScale 24.02 as a stateless proxy in front of your
-[MariaDB](/docs/mariadb) servers: one listener that splits writes from
+[MariaDB](/mariadb) servers: one listener that splits writes from
 reads, a monitor that tracks the topology, and `maxctrl` over a REST API
 for everything else. The entrypoint generates `maxscale.cnf` from
 environment variables at boot, so a working read/write-splitting proxy is
@@ -90,12 +90,12 @@ curl -s --user admin:mariadb http://127.0.0.1:8989/v1/maxscale
 
 > [!NOTE]
 > `EZX_HEALTH_ADDR` is not preset in this image (unlike
-> [PostgreSQL](/docs/postgresql) and MariaDB) — set it to `127.0.0.1:8080`
+> [PostgreSQL](/postgresql) and MariaDB) — set it to `127.0.0.1:8080`
 > to get the `/health` endpoints, otherwise the container still starts with
 > a warning.
 
 > [!TIP]
-> MaxScale shines in front of a [Galera cluster](/docs/mariadb#galera-cluster):
+> MaxScale shines in front of a [Galera cluster](/mariadb#galera-cluster):
 > point all three route/monitor variables at the node list and let the
 > monitor route around a failed node — see
-> [Configuration](/docs/configuration) for the general env-var model.
+> [Configuration](/configuration) for the general env-var model.

@@ -103,6 +103,6 @@ curl -s http://localhost:8080/loki/ready
 
 ## Next steps
 
-- Visualize logs with [Grafana](/docs/grafana).
-- Collect metrics with [Prometheus](/docs/prometheus).
-- [Volumes](/docs/volumes) explains what to persist.
+- Visualize logs with [Grafana](/grafana).
+- Collect metrics with [Prometheus](/prometheus).
+- [Volumes](/volumes) explains what to persist.
