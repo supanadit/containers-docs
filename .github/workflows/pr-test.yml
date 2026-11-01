@@ -1,0 +1,58 @@
+name: PR Test Docs Site
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+
+      - name: Lint all PHP files
+        run: |
+          find . -name "*.php" -not -path "./node_modules/*" -print0 \
+            | xargs -0 -n1 php -l
+
+      - name: Validate markdown pages match the nav tree
+        run: php -r '
+          $C = require "app/content.php";
+          $missing = [];
+          foreach (array_merge(...array_map(fn($g) => $g["pages"], $C["nav"])) as $p) {
+              if (!is_file("content/" . $p["slug"] . ".md")) $missing[] = $p["slug"];
+          }
+          if ($missing) {
+              fwrite(STDERR, "Nav entries without content/*.md: " . implode(", ", $missing) . "\n");
+              exit(1);
+          }
+          echo "All " . count($C["nav"]) . " nav groups resolve to markdown files.\n";
+          '
+
+      - name: Smoke test routes with the built-in server
+        run: |
+          (cd public && php -S 127.0.0.1:8099 index.php &) 
+          sleep 2
+          for route in /docs /docs/why /docs/postgresql /search-index.json \
+                       /llms.txt /llms-full.txt /sitemap.xml /docs/why.md; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:8099$route")
+            if [ "$code" != "200" ]; then
+              echo "Route $route returned $code" >&2
+              exit 1
+            fi
+            echo "OK $route -> 200"
+          done
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8099/docs/nope)
+          if [ "$code" != "404" ]; then
+            echo "Unknown slug returned $code, expected 404" >&2
+            exit 1
+          fi
+          echo "OK /docs/nope -> 404"

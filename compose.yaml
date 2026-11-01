@@ -1,0 +1,7 @@
+services:
+  docs:
+    image: ghcr.io/supanadit/containers-docs:latest
+    build: .
+    container_name: containers-docs
+    ports:
+      - "3050:80"
