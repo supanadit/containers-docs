@@ -1,7 +1,7 @@
 # containers-docs
 
 Documentation site for the [containers](https://github.com/supanadit/containers)
-collection, served at [docs.container.supanadit.com](https://docs.container.supanadit.com).
+collection, served at [docs.containers.supanadit.com](https://docs.containers.supanadit.com).
 Plain PHP 8, no framework, no Composer — served by Apache behind Traefik,
 modeled on the sibling `container-landing` app.
 

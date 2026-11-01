@@ -7,7 +7,7 @@ return [
         'name'        => 'Containers Docs',
         'shortName'   => 'Containers',
         'description' => 'Documentation for the containers collection: production-ready Docker images built with forge, supervised by ezx, and configured entirely through environment variables.',
-        'baseUrl'     => 'https://docs.container.supanadit.com',
+        'baseUrl'     => 'https://docs.containers.supanadit.com',
         'landingUrl'  => 'https://containers.supanadit.com',
         'repoUrl'     => 'https://github.com/supanadit/containers-docs',
         'registry'    => 'ghcr.io/supanadit/containers',
